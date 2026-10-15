@@ -35,6 +35,8 @@ return [
     |
     */
 
+    'contact_to' => env('CONTACT_TO_ADDRESS', 'info@diaspora-tech.com'),
+
     'mailers' => [
 
         'smtp' => [

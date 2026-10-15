@@ -1,31 +1,70 @@
-<footer class="footer">
-
+<footer class="site-footer">
     <div class="container">
 
-        <div class="footer-content">
+        <div class="footer-grid">
 
-            <div>
-                <h3>DIASPORA</h3>
+            <div class="footer-brand">
+                <img src="{{ asset('images/LOGO-DSB.png') }}" alt="Diaspora Sdn Bhd">
                 <p>
-                    Information security and technology solutions
-                    for modern organisations.
+                    Diaspora Sdn Bhd is an information security and
+                    technology company helping organisations strengthen
+                    their digital environment through practical,
+                    professional solutions.
                 </p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/p/Diaspora-Sdn-Bhd-100070332791176/" target="_blank" aria-label="Facebook" class="icon-facebook">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/diaspora-sdn-bhd-3596a223b/?originalSubdomain=my" target="_blank" aria-label="LinkedIn" class="icon-linkedin">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://x.com/diasporadsb" target="_blank" aria-label="X" class="icon-x">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+                </div>
             </div>
 
-            <div>
-                <h3>Contact</h3>
-                <p>
-                    Get in touch with our team to learn more
-                    about our services.
-                </p>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ url('/') }}">Home</a></li>
+                    <li><a href="{{ url('/about') }}">About Us</a></li>
+                    <li><a href="{{ url('/services') }}">Services</a></li>
+                    <li><a href="{{ url('/certification') }}">Certification</a></li>
+                    <li><a href="{{ url('/media') }}">Media</a></li>
+                    <li><a href="{{ url('/contact') }}">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Get In Touch</h4>
+
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">📍</div>
+                    <p>
+                        Block TG1-5, UPM-MTDC Technology Centre,<br>
+                        Universiti Putra Malaysia,<br>
+                        43400 Serdang, Selangor Darul Ehsan
+                    </p>
+                </div>
+
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">📞</div>
+                    <p>+603-8958 5858</p>
+                </div>
+
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">✉️</div>
+                    <p>info@diaspora-tech.com</p>
+                </div>
             </div>
 
         </div>
 
         <div class="footer-bottom">
-            &copy; {{ date('Y') }} Diaspora. All rights reserved.
+            <div>&copy; {{ date('Y') }} Diaspora Sdn Bhd. All rights reserved.</div>
+            <div>ISO/IEC 27001:2022 Certified</div>
         </div>
 
     </div>
-
 </footer>
