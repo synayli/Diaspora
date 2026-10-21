@@ -11,29 +11,39 @@ class ContactController extends Controller
 {
     public function send(Request $request)
     {
-        // Honeypot: real visitors never see or fill this field, bots usually do
+        // Honeypot: bots may fill this hidden field
         if ($request->filled('website')) {
             return back();
         }
 
+        // Validate the contact form fields
         $data = $request->validate([
-            'name'    => 'required|string|max:100',
-            'email'   => 'required|email|max:150',
-            'phone'   => 'nullable|string|max:30',
-            'subject' => 'required|string|max:150',
-            'message' => 'required|string|max:5000',
+            'name'         => 'required|string|max:100',
+            'organisation' => 'nullable|string|max:150',
+            'email'        => 'required|email|max:150',
+            'subject'      => 'required|string|max:150',
+            'message'      => 'required|string|max:5000',
         ]);
 
         try {
-            Mail::to(config('mail.contact_to'))->send(new ContactMessage($data));
+            // Send the enquiry to the company email
+            Mail::to(config('mail.contact_to'))
+                ->send(new ContactMessage($data));
         } catch (\Throwable $e) {
             Log::error('Contact form mail failed: ' . $e->getMessage());
 
             return back()
                 ->withInput()
-                ->with('error', 'Sorry, your message could not be sent. Please try again or email us directly.');
+                ->with(
+                    'error',
+                    'Sorry, your message could not be sent. Please try again or email us directly.'
+                );
         }
 
-        return back()->with('success', 'Thank you. Your message has been sent and our team will be in touch soon.');
+        // Return to Contact and trigger the Thank You popup
+        return redirect('/#contact')->with(
+            'success',
+            'Thank you. Your message has been sent and our team will be in touch soon.'
+        );
     }
 }

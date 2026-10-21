@@ -2,6 +2,8 @@
 
 return [
 
+        'contact_to' => env('CONTACT_TO_ADDRESS', 'info@diaspora-tech.com'),
+
     /*
     |--------------------------------------------------------------------------
     | Default Mailer
@@ -34,8 +36,6 @@ return [
     |            "failover", "roundrobin"
     |
     */
-
-    'contact_to' => env('CONTACT_TO_ADDRESS', 'info@diaspora-tech.com'),
 
     'mailers' => [
 

@@ -218,3 +218,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(typeFirstLine, 500);
 });
+
+// Thank-you popup — contact form
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('thanksModal');
+
+    if (!modal) return;
+
+    const closeButton = document.getElementById('thanksClose');
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.body.style.overflow = 'hidden';
+
+    closeButton?.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    closeButton?.focus();
+});
