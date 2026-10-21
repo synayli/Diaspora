@@ -1,4 +1,3 @@
-
 //navbar scroll effect
 document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.querySelector('.navbar');
@@ -88,21 +87,41 @@ document.addEventListener('keydown', (e) => {
 
 // Intersection Observer for reveal animations
 document.addEventListener('DOMContentLoaded', () => {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion || !('IntersectionObserver' in window)) return;
+    const targets = document.querySelectorAll(
+        '.reveal, .reveal-stagger'
+    );
 
-    const targets = document.querySelectorAll('.reveal, .reveal-stagger');
+    if (!targets.length) return;
+
+    const reduceMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    // Show everything immediately if animations are disabled
+    // or Intersection Observer is unsupported.
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+        targets.forEach((element) => {
+            element.classList.add('is-visible');
+        });
+
+        return;
+    }
 
     const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                obs.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+            if (!entry.isIntersecting) return;
 
-    targets.forEach((el) => observer.observe(el));
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -30px 0px'
+    });
+
+    targets.forEach((element) => {
+        observer.observe(element);
+    });
 });
 
 // Card glow effect
@@ -153,4 +172,49 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
     });
+});
+
+// Typewriter effect for hero section
+document.addEventListener('DOMContentLoaded', () => {
+    const line1 = document.getElementById('typewriterLine1');
+    const line2 = document.getElementById('typewriterLine2');
+    const cursor1 = document.getElementById('typewriterCursor1');
+    const cursor2 = document.getElementById('typewriterCursor2');
+
+    if (!line1 || !line2 || !cursor1 || !cursor2) return;
+
+    const text1 = 'Confidence in a';
+    const text2 = 'connected world.';
+
+    let index = 0;
+
+    // Show only the first cursor initially
+    cursor1.style.display = 'inline-block';
+    cursor2.style.display = 'none';
+
+    function typeFirstLine() {
+        if (index < text1.length) {
+            line1.textContent += text1.charAt(index);
+            index++;
+            setTimeout(typeFirstLine, 75);
+        } else {
+            // Move the visible cursor to the second line
+            cursor1.style.display = 'none';
+            cursor2.style.display = 'inline-block';
+
+            index = 0;
+            setTimeout(typeSecondLine, 300);
+        }
+    }
+
+    function typeSecondLine() {
+        if (index < text2.length) {
+            line2.textContent += text2.charAt(index);
+            index++;
+            setTimeout(typeSecondLine, 75);
+        }
+        // Cursor remains beside the final full stop.
+    }
+
+    setTimeout(typeFirstLine, 500);
 });

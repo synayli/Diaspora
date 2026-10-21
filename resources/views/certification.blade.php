@@ -105,9 +105,14 @@
                 Systems (ISMS), ensuring the confidentiality, integrity and
                 availability of information across our organisation.
             </p>
-            <button type="button" class="btn btn-secondary" onclick="openCertModal('{{ asset('images/Cert-ISMS-ISO-27001-2022.png') }}')">
+            <a
+                href="{{ asset('images/Cert-ISMS-ISO-27001-2022.png') }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-secondary"
+            >
                 View Certificate
-            </button>
+            </a>
         </div>
 
         <div class="cert-page-card">
@@ -121,21 +126,15 @@
                 confirming our penetration testing services meet national
                 standards of professionalism and assurance.
             </p>
-            <button type="button" class="btn btn-secondary" onclick="openCertModal('{{ asset('images/Cert-PTSP.png') }}')">
+            <a
+                href="{{ asset('images/Cert-PTSP.png') }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-secondary"
+            >
                 View Certificate
-            </button>
+            </a>
         </div>
-
-        </div>
-
-        {{-- Modal — place once, right after the closing </div> of .cert-page-grid --}}
-        <div class="cert-modal" id="certModal">
-            <div class="cert-modal-content">
-                <button type="button" class="cert-modal-close" onclick="closeCertModal()">&times;</button>
-                <img id="certModalImage" src="" alt="Certificate">
-            </div>
-        </div>
-
     </div>
 </section>
 

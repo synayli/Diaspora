@@ -27,12 +27,11 @@
             <div class="footer-col">
                 <h4>Quick Links</h4>
                 <ul class="footer-links">
-                    <li><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="{{ url('/about') }}">About Us</a></li>
-                    <li><a href="{{ url('/services') }}">Services</a></li>
-                    <li><a href="{{ url('/certification') }}">Certification</a></li>
-                    <li><a href="{{ url('/media') }}">Media</a></li>
-                    <li><a href="{{ url('/contact') }}">Contact</a></li>
+                    <li><a href="{{ url('/#services') }}">Our Expertise</a></li>
+                    <li><a href="{{ url('/#ncii-readiness') }}">NCII & Akta 584</a></li>
+                    <li><a href="{{ url('/#about') }}">About Us</a></li>
+                    <li><a href="{{ url('/#training') }}">Training</a></li>
+                    <li><a href="{{ url('/#contact') }}">Contact</a></li>
                 </ul>
             </div>
 

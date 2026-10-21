@@ -1,39 +1,37 @@
 <?php
 
 use App\Services\HackerNewsFeed;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/services', function () {
-    return view('services');
-});
-
-Route::get('/certification', function () {
-    return view('certification');
-});
-
-Route::get('/media', function (HackerNewsFeed $feed) {
+// Homepage with latest cybersecurity insights
+Route::get('/', function (HackerNewsFeed $feed) {
     $insights = $feed->latest(6);
 
-    return view('media', compact('insights'));
-});
+    return view('home', compact('insights'));
+})->name('home');
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+// Certification page
+Route::view('/certification', 'certification')
+    ->name('certification');
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+// Individual service pages
+Route::view(
+    '/services/cyber-security-assessment',
+    'services.cyber-security-assessment'
+)->name('services.assessment');
 
+Route::view(
+    '/services/governance-compliance',
+    'services.governance-compliance'
+)->name('services.governance');
+
+Route::view(
+    '/services/disaster-recovery',
+    'services.disaster-recovery'
+)->name('services.disaster-recovery');
+
+// Contact form submission
 Route::post('/contact', [ContactController::class, 'send'])
-    ->middleware('throttle:5,1')      // max 5 submissions per minute per visitor
+    ->middleware('throttle:5,1')
     ->name('contact.send');
