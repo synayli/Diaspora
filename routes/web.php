@@ -15,6 +15,13 @@ Route::get('/', function (HackerNewsFeed $feed) {
 Route::view('/certification', 'certification')
     ->name('certification');
 
+// Media page
+Route::get('/media', function (HackerNewsFeed $feed) {
+    $insights = $feed->latest(6);
+
+    return view('media', compact('insights'));
+})->name('media');
+
 // Individual service pages
 Route::view(
     '/services/cyber-security-assessment',

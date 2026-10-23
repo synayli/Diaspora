@@ -6,13 +6,10 @@
 
 {{-- Contact buttons send the service name so the form can pre-fill it --}}
 @php
-       $contactUrl = url('/') . '?service=' . urlencode(
+    $contactUrl = url('/') . '?service=' . urlencode(
         'Disaster Recovery Plan and Simulation Exercise'
     ) . '#contact';
-@endphp
 
-{{-- Icons are reused in the hero panel and the cards --}}
-@php
     $services = [
         [
             'id'   => 'drp',
@@ -39,15 +36,44 @@
             'icon' => '<circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z"/>',
         ],
     ];
+
+    $steps = [
+        [
+            'title' => 'Plan',
+            'text' => 'Define recovery priorities, responsibilities, and procedures aligned with your business needs.',
+        ],
+        [
+            'title' => 'Practise',
+            'text' => 'Test recovery procedures, team coordination, and decision-making through structured disruption scenarios.',
+        ],
+        [
+            'title' => 'Restore',
+            'text' => 'Strengthen your ability to restore critical ICT services during a disruption.',
+        ],
+    ];
 @endphp
 
+{{-- HERO --}}
 <section class="ds-detail-hero">
     <div class="ds-container ds-detail-hero-inner">
 
         <div class="ds-detail-hero-copy">
             <div class="ds-detail-hero-top">
                 <a href="{{ url('/#services') }}" class="ds-back-link">
-                    <span aria-hidden="true">←</span>
+                    <svg
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="M19 12H5"/>
+                        <path d="m12 19-7-7 7-7"/>
+                    </svg>
                     Back to Our Services
                 </a>
 
@@ -79,19 +105,42 @@
             </p>
 
             <a href="{{ $contactUrl }}" class="ds-detail-button">
-                Plan Your Recovery Exercise <span aria-hidden="true">↗</span>
+                Plan Your Recovery Exercise
+                <svg
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M7 17 17 7"/>
+                    <path d="M7 7h10v10"/>
+                </svg>
             </a>
         </div>
 
         <aside class="ds-detail-hero-panel" aria-label="Services in this offering">
             <p class="ds-panel-title">What's included</p>
+
             <ul class="ds-panel-list">
                 @foreach ($services as $service)
                     <li>
                         <a href="#{{ $service['id'] }}">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="1.7" stroke-linecap="round"
-                                 stroke-linejoin="round" aria-hidden="true">{!! $service['icon'] !!}</svg>
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                {!! $service['icon'] !!}
+                            </svg>
                             <span>{{ $service['name'] }}</span>
                         </a>
                     </li>
@@ -102,21 +151,16 @@
     </div>
 </section>
 
-{{-- Sequence taken from the tagline: Plan, Practise, Restore --}}
-@php
-    $steps = [
-        ['title' => 'Plan',     'text' => 'Define recovery priorities, responsibilities, and procedures aligned with your business needs.'],
-        ['title' => 'Practise', 'text' => 'Test recovery procedures, team coordination, and decision-making through structured disruption scenarios.'],
-        ['title' => 'Restore',  'text' => 'Strengthen your ability to restore critical ICT services during a disruption.'],
-    ];
-@endphp
-
+{{-- THREE-STEP STRIP --}}
 <section class="ds-detail-steps">
     <div class="ds-container">
         <ol class="ds-steps-list">
             @foreach ($steps as $step)
                 <li>
-                    <span class="ds-step-num" aria-hidden="true">{{ $loop->iteration }}</span>
+                    <span class="ds-step-num" aria-hidden="true">
+                        {{ $loop->iteration }}
+                    </span>
+
                     <div>
                         <h3>{{ $step['title'] }}</h3>
                         <p>{{ $step['text'] }}</p>
@@ -127,26 +171,37 @@
     </div>
 </section>
 
+{{-- SERVICES --}}
 <section class="ds-detail-content">
     <div class="ds-container">
         <div class="ds-section-heading">
             <span class="ds-eyebrow">WHAT WE DO</span>
+
             <h2>Prepare your team to recover when it matters.</h2>
+
             <p>
                 Build a structured recovery approach and test whether
                 your plans, people and supporting systems are ready.
             </p>
         </div>
 
-        {{-- ds-detail-grid--two gives a 2 x 2 layout for four services --}}
         <div class="ds-detail-grid ds-detail-grid--two">
             @foreach ($services as $service)
                 <article class="ds-detail-card" id="{{ $service['id'] }}">
                     <span class="ds-detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="1.7" stroke-linecap="round"
-                             stroke-linejoin="round" aria-hidden="true">{!! $service['icon'] !!}</svg>
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            {!! $service['icon'] !!}
+                        </svg>
                     </span>
+
                     <h3>{{ $service['name'] }}</h3>
                     <p>{{ $service['text'] }}</p>
                 </article>
@@ -155,6 +210,7 @@
     </div>
 </section>
 
+{{-- OUR APPROACH --}}
 <section class="ds-detail-approach">
     <div class="ds-container ds-detail-approach-inner">
         <div>
@@ -173,15 +229,33 @@
     </div>
 </section>
 
+{{-- CALL TO ACTION --}}
 <section class="ds-detail-cta">
     <div class="ds-container">
         <span class="ds-eyebrow">TAKE THE NEXT STEP</span>
+
         <h2>Put your recovery plan to the test.</h2>
+
         <p>
             Speak to Diaspora about your DRP and simulation needs.
         </p>
+
         <a href="{{ $contactUrl }}" class="ds-detail-button">
-            Plan Your Recovery Exercise <span aria-hidden="true">↗</span>
+            Plan Your Recovery Exercise
+            <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+            >
+                <path d="M7 17 17 7"/>
+                <path d="M7 7h10v10"/>
+            </svg>
         </a>
     </div>
 </section>

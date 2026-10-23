@@ -12,14 +12,11 @@
                     professional solutions.
                 </p>
                 <div class="footer-social">
-                    <a href="https://www.facebook.com/p/Diaspora-Sdn-Bhd-100070332791176/" target="_blank" aria-label="Facebook" class="icon-facebook">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/diaspora-sdn-bhd-3596a223b/?originalSubdomain=my" target="_blank" aria-label="LinkedIn" class="icon-linkedin">
+                    <a href="https://www.linkedin.com/company/diaspora-sdn-bhd/posts/" target="_blank" aria-label="LinkedIn" class="icon-linkedin">
                         <i class="fa-brands fa-linkedin-in"></i>
                     </a>
-                    <a href="https://x.com/diasporadsb" target="_blank" aria-label="X" class="icon-x">
-                        <i class="fa-brands fa-x-twitter"></i>
+                    <a href="https://www.instagram.com/diasporasb/" target="_blank" aria-label="X" class="icon-x">
+                        <i class="fa-brands fa-instagram"></i>
                     </a>
                 </div>
             </div>
@@ -31,6 +28,7 @@
                     <li><a href="{{ url('/#ncii-readiness') }}">NCII & Akta 584</a></li>
                     <li><a href="{{ url('/#about') }}">About Us</a></li>
                     <li><a href="{{ url('/#training') }}">Training</a></li>
+                    <li><a href="{{ url('/media') }}">Media</a></li>
                     <li><a href="{{ url('/#contact') }}">Contact</a></li>
                 </ul>
             </div>

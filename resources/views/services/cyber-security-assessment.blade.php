@@ -59,7 +59,18 @@
         <div class="ds-detail-hero-copy">
             <div class="ds-detail-hero-top">
                 <a href="{{ url('/#services') }}" class="ds-back-link">
-                    <span aria-hidden="true">←</span>
+                    <svg viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true">
+                        <path d="M19 12H5"/>
+                        <path d="m12 19-7-7 7-7"/>
+                    </svg>
                     Back to Our Services
                 </a>
 
@@ -95,7 +106,18 @@
 
             <a href="{{ $contactUrl }}" class="ds-detail-button">
                 Discuss Your Security Assessment
-                <span aria-hidden="true">↗</span>
+                <svg viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true">
+                    <path d="M7 17 17 7"/>
+                    <path d="M7 7h10v10"/>
+                </svg>
             </a>
         </div>
 

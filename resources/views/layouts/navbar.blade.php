@@ -8,21 +8,43 @@
 
         {{-- Main navigation --}}
         <div class="nav-links" id="navLinks">
-            <a href="{{ url('/#services') }}">
+
+            <a
+                href="{{ url('/#services') }}"
+                data-section="services"
+            >
                 Our Expertise
             </a>
 
-            <a href="{{ url('/#ncii-readiness') }}">
-                NCII & Akta 854
+            <a
+                href="{{ url('/#ncii-readiness') }}"
+                data-section="ncii-readiness"
+            >
+                NCII &amp; Akta 854
             </a>
 
-            <a href="{{ url('/#about-us') }}">
+            <a
+                href="{{ url('/#about-us') }}"
+                data-section="about-us"
+            >
                 About Us
             </a>
 
-            <a href="{{ url('/#training') }}">
+            <a
+                href="{{ url('/#training') }}"
+                data-section="training"
+            >
                 Training
             </a>
+
+            <a
+                href="{{ url('/media') }}"
+                class="{{ request()->is('media*') ? 'active' : '' }}"
+                data-page="media"
+            >
+                Media
+            </a>
+
         </div>
 
         {{-- Contact action and mobile menu --}}

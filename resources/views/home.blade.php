@@ -106,6 +106,7 @@
         </div>
     </div>
 
+    
     {{-- TRUST STRIP: REMAINS INSIDE THE HERO --}}
     <div class="hero-stats">
         <div class="container">
@@ -126,37 +127,76 @@
             </div>
         </div>
     </div>
-</section>
 
-{{-- CREDENTIALS STRIP: NOW OUTSIDE THE HERO --}}
-<section class="ds-credentials-strip reveal" aria-label="Our expertise">
-    <div class="ds-credentials-inner">
+    {{-- CREDENTIALS STRIP: NOW INSIDE THE HERO --}}
+    <section class="ds-credentials-strip reveal" aria-label="Our expertise">
+        <div class="ds-credentials-inner">
 
-        <div class="ds-credentials-intro">
-            Built around your<br>priorities
+            <div class="ds-credentials-intro">
+                Built around your<br>priorities
+            </div>
+
+            <div class="ds-credential">
+                <strong>ISO/IEC 27001</strong>
+                <span>ISMS</span>
+            </div>
+
+            <div class="ds-credential">
+                <strong>ISO 22301</strong>
+                <span>BCMS</span>
+            </div>
+
+            <div class="ds-credential">
+                <strong>NCII</strong>
+                <span>AKTA 854</span>
+            </div>
+
+            <div class="ds-credential">
+                <strong>ICT</strong>
+                <span>RESILIENCE</span>
+            </div>
+
         </div>
+    </section>
 
-        <div class="ds-credential">
-            <strong>ISO/IEC 27001</strong>
-            <span>ISMS</span>
-        </div>
+</section> {{-- END HERO SECTION --}}
 
-        <div class="ds-credential">
-            <strong>ISO 22301</strong>
-            <span>BCMS</span>
-        </div>
+@php
+    // Default: all clients use .png
+    $extensions = array_fill(1, 38, 'png');
 
-        <div class="ds-credential">
-            <strong>NCII</strong>
-            <span>AKTA 854</span>
-        </div>
+    // Override the exceptions
+    $extensions[33] = 'jpg';
+    $extensions[37] = 'jpeg';
+    $extensions[14] = 'jpeg';
 
-        <div class="ds-credential">
-            <strong>ICT</strong>
-            <span>RESILIENCE</span>
-        </div>
+    $clientsRow1 = collect(range(1, 20))->map(fn($i) => "client-$i.{$extensions[$i]}");
+    $clientsRow2 = collect(range(21, 38))->map(fn($i) => "client-$i.{$extensions[$i]}");
+@endphp
 
+<section class="clients-strip">
+    <div class="container">
+        <div class="clients-label">Trusted By Organisations Across Malaysia</div>
     </div>
+
+    {{-- Row 1 — scrolls left --}}
+    <div class="clients-track-wrap">
+        <div class="clients-track scroll-left">
+            @foreach ($clientsRow1->concat($clientsRow1) as $logo)
+                <img src="{{ asset('images/clients/' . $logo) }}" alt="Client logo">
+            @endforeach
+        </div>
+    </div>
+
+    {{-- Row 2 — scrolls right --}}
+    <div class="clients-track-wrap">
+        <div class="clients-track scroll-right">
+            @foreach ($clientsRow2->concat($clientsRow2) as $logo)
+                <img src="{{ asset('images/clients/' . $logo) }}" alt="Client logo">
+            @endforeach
+        </div>
+    </div>
+
 </section>
 
 {{-- SERVICES --}}
@@ -207,7 +247,12 @@
 
                 <a href="{{ route('services.assessment') }}" class="ds-expertise-link">
                     Explore assessment services
-                    <span aria-hidden="true">↗</span>
+                <span class="ds-arrow-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                </span>
                 </a>
             </article>
 
@@ -234,8 +279,13 @@
                 </ul>
 
                <a href="{{ route('services.governance') }}" class="ds-expertise-link">
-                    Explore governance services
-                    <span aria-hidden="true">↗</span>
+                    Explore governance services               
+                    <span class="ds-arrow-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                </span>
                 </a>
             </article>
 
@@ -263,8 +313,14 @@
 
                 <a href="{{ route('services.disaster-recovery') }}" class="ds-expertise-link">
                     Explore recovery services
-                    <span aria-hidden="true">↗</span>
+                    <span class="ds-arrow-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </span>
                 </a>
+
             </article>
 
         </div>
@@ -295,8 +351,12 @@
             </p>
 
             <a href="{{ url('/#contact') }}" class="ds-ncii-cta">
-                <span>Discuss your NCII priorities</span>
-                <span class="ds-ncii-arrow" aria-hidden="true">↗</span>
+                <span>Discuss your NCII priorities</span>                     
+                <span class="ds-ncii-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
+                </span>
             </a>
 
             <div class="ds-ncii-tagline">
@@ -443,9 +503,114 @@
 
             <a href="{{ url('/certification') }}" class="ds-about-credentials">
                 View our published credentials
-                <span aria-hidden="true">↗</span>
+                <span class="ds-arrow-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
+                </span>
             </a>
 
+        </div>
+    </div>
+</section>
+
+{{-- CERTIFICATIONS, LICENCES & REGISTRATIONS --}}
+<section class="ds-certifications-carousel section-light" id="certifications">
+    <div class="ds-certifications-container">
+
+        <div class="ds-certifications-heading reveal">
+            <span class="ds-certifications-eyebrow">
+                04 / ACCREDITATIONS &amp; REGISTRATIONS
+            </span>
+            <h2>Certifications, Licences<br>&amp; Accreditations</h2>
+            <div class="ds-certifications-line"></div>
+            <p>
+                Authorised licenses, regulatory compliance, and internationally certified standards.
+            </p>
+        </div>
+
+        <div class="ds-certifications-slider reveal">
+            <div class="ds-certifications-track">
+
+                {{-- Primary Set --}}
+                <div class="ds-certifications-group">
+                    <div class="ds-certification-logo ds-cert-multi" tabindex="0">
+                        <div class="ds-certification-card">
+                            <img src="{{ asset('images/MOF.png') }}" alt="MOF Bumiputera &amp; Registration" loading="lazy">
+                            <span class="ds-multi-badge">2 Certificates</span>
+
+                            <div class="ds-cert-dropdown" role="menu">
+                                <a href="{{ asset('documents/Cert-Bumiputera.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" role="menuitem">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                    <span>Sijil Bumiputera</span>
+                                </a>
+                                <a href="{{ asset('documents/Cert-Pendaftaran-Syarikat.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" role="menuitem">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                    <span>Sijil Pendaftaran Syarikat</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="{{ asset('documents/Cert-Licence(NACSA).pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="NACSA Licensed Cybersecurity Service Provider">
+                        <div class="ds-certification-card">
+                            <img class="logo-nacsa" src="{{ asset('images/nacsa.png') }}" alt="NACSA" loading="lazy">
+                        </div>
+                    </a>
+
+                    <a href="{{ asset('images/Cert-ISMS-ISO-27001-2022.png') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="CyberSecurity Malaysia PTSP Registered">
+                        <div class="ds-certification-card">
+                            <img src="{{ asset('images/ISO.png') }}" alt="CyberSecurity Malaysia ISO/IEC 27001" loading="lazy">
+                        </div>
+                    </a>
+
+                    <a href="{{ asset('images/Cert-PTSP.png') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="CyberSecurity Malaysia PTSP Registered">
+                        <div class="ds-certification-card">
+                            <img src="{{ asset('images/ISCB-removebg.png') }}" alt="CyberSecurity Malaysia ISO/IEC 27001" loading="lazy">
+                        </div>
+                    </a>
+                    
+                </div>
+
+                {{-- Cloned Set for Infinite Loop --}}
+                <div class="ds-certifications-group" aria-hidden="true">
+                    <div class="ds-certification-logo ds-cert-multi" tabindex="-1">
+                        <div class="ds-certification-card">
+                            <img src="{{ asset('images/MOF.png') }}" alt="" loading="lazy">
+                            <span class="ds-multi-badge">2 Certificates</span>
+
+                            <div class="ds-cert-dropdown">
+                                <a href="{{ asset('documents/Cert-Bumiputera.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" tabindex="-1">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                    <span>Sijil Bumiputera</span>
+                                </a>
+                                <a href="{{ asset('documents/Cert-Pendaftaran-Syarikat.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" tabindex="-1">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                    <span>Sijil Pendaftaran Syarikat</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="{{ asset('documents/Cert-Licence(NACSA).pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" tabindex="-1">
+                        <div class="ds-certification-card">
+                            <img class="logo-nacsa" src="{{ asset('images/nacsa.png') }}" alt="" loading="lazy">
+                        </div>
+                    </a>
+
+                     <a href="{{ asset('images/Cert-ISMS-ISO-27001-2022.png') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="CyberSecurity Malaysia PTSP Registered">
+                        <div class="ds-certification-card">
+                            <img src="{{ asset('images/ISO.png') }}" alt="CyberSecurity Malaysia ISO/IEC 27001" loading="lazy">
+                        </div>
+                    </a>
+
+                    <a href="{{ asset('images/Cert-PTSP.png') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="CyberSecurity Malaysia PTSP Registered">
+                        <div class="ds-certification-card">
+                            <img src="{{ asset('images/ISCB-removebg.png') }}" alt="CyberSecurity Malaysia ISO/IEC 27001" loading="lazy">
+                        </div>
+                    </a>
+
+            </div>
         </div>
 
     </div>
@@ -487,9 +652,12 @@
                     <span class="ds-training-description">
                         People & everyday security
                     </span>
+                </span>               
+                <span class="ds-training-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
                 </span>
-
-                <span class="ds-training-arrow" aria-hidden="true">↗</span>
             </a>
 
             <a href="{{ url('/#contact') }}" class="ds-training-item">
@@ -503,8 +671,11 @@
                         Policies, risks & controls
                     </span>
                 </span>
-
-                <span class="ds-training-arrow" aria-hidden="true">↗</span>
+                <span class="ds-training-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
+                </span>
             </a>
 
             <a href="{{ url('/#contact') }}" class="ds-training-item">
@@ -517,9 +688,12 @@
                     <span class="ds-training-description">
                         VAPT, web applications & Wi-Fi
                     </span>
+                </span>          
+                <span class="ds-training-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
                 </span>
-
-                <span class="ds-training-arrow" aria-hidden="true">↗</span>
             </a>
 
             <a href="{{ url('/#contact') }}" class="ds-training-item">
@@ -534,7 +708,12 @@
                     </span>
                 </span>
 
-                <span class="ds-training-arrow" aria-hidden="true">↗</span>
+                <span class="ds-training-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
+                </span>
+                
             </a>
 
         </div>
@@ -707,9 +886,12 @@
                             @endif
                         </div>
 
-                        <span class="ds-insights-arrow" aria-hidden="true">
-                            ↗
+                        <span class="ds-arrow-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M7 17 17 7M7 7h10v10" />
+                            </svg>
                         </span>
+
                     </div>
                 </a>
             @empty
@@ -739,7 +921,13 @@
                 class="ds-insights-view-all"
             >
                 <span>Explore all news</span>
-                <span class="ds-insights-view-arrow" aria-hidden="true">↗</span>
+                
+                <span class="ds-arrow-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
+                </span>
+
             </a>
         </div>
 
@@ -768,14 +956,22 @@
 
             <a class="ds-conversation-link" href="mailto:info@diaspora-tech.com">
                 <span class="ds-contact-icon">✉</span>
-                <span>info@diaspora-tech.com</span>
-                <span class="ds-contact-arrow">↗</span>
+                <span>info@diaspora-tech.com</span>             
+                <span class="ds-arrow-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
+                </span>
             </a>
 
             <a class="ds-conversation-link" href="tel:+60389585858">
                 <span class="ds-contact-icon">⌕</span>
-                <span>+603-8958 5858</span>
-                <span class="ds-contact-arrow">↗</span>
+                <span>+603-8958 5858</span>              
+                <span class="ds-arrow-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
+                </span>
             </a>
 
             <div class="ds-conversation-divider"></div>
@@ -789,6 +985,32 @@
                         Universiti Putra Malaysia, 43400 Serdang<br>
                         Selangor Darul Ehsan
                     </p>
+                </div>
+            </div>
+            
+            <div class="ds-contact-map">
+                <iframe
+                    id="ds-office-map"
+                    title="Diaspora Sdn. Bhd. office location"
+                    src="https://maps.google.com/maps?q=Block%20TG1-5%2C%20UPM-MTDC%20Technology%20Centre%2C%20Universiti%20Putra%20Malaysia%2C%2043400%20Serdang%2C%20Selangor&z=16&output=embed"
+                    loading="lazy"
+                    allowfullscreen
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+
+                <div class="ds-contact-map-footer">
+                    <span class="ds-contact-map-location">
+                        <span class="ds-contact-map-dot"></span>
+                        SERDANG, SELANGOR
+                    </span>
+
+                    <a
+                        href="https://www.google.com/maps/search/?api=1&query=Block+TG1-5+UPM-MTDC+Technology+Centre%2C+Universiti+Putra+Malaysia%2C+43400+Serdang%2C+Selangor"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Open directions ↗
+                    </a>
                 </div>
             </div>
 
@@ -812,5 +1034,56 @@
 
     </div>
 </section>
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mapElement = document.getElementById('ds-office-map');
+
+            if (!mapElement || typeof L === 'undefined' || mapElement.dataset.initialized) {
+                return;
+            }
+
+            mapElement.dataset.initialized = 'true';
+
+            /*
+            * Approximate UPM-MTDC Technology Centre area.
+            * Verify the exact Block TG1-5 pin before publishing.
+            */
+            const officeLocation = [2.9995, 101.7195];
+
+            const map = L.map(mapElement, {
+                scrollWheelZoom: false
+            }).setView(officeLocation, 16);
+
+            L.tileLayer(
+                'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+                {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                }
+            ).addTo(map);
+
+            const officeIcon = L.divIcon({
+                className: '',
+                html: '<div class="ds-map-marker"><i class="fa-solid fa-location-dot"></i></div>',
+                iconSize: [30, 30],
+                iconAnchor: [15, 30]
+            });
+
+            L.marker(officeLocation, { icon: officeIcon })
+                .addTo(map)
+                .bindPopup(
+                    '<strong>Diaspora Sdn. Bhd.</strong><br>UPM-MTDC Technology Centre, Serdang'
+                );
+
+            setTimeout(function () {
+                map.invalidateSize();
+            }, 150);
+        });
+    </script>
+
+   
+@endpush
 
 @endsection
