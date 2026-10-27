@@ -761,6 +761,71 @@ svg.icon-vector,
         animation: none !important;
     }
 }
+
+/* CTA (deep forest dark), matches the Media page */
+.media-cta-section {
+    position: relative;
+    padding: 95px 0;
+    background: radial-gradient(circle at 50% 50%, #12241a 0%, #08120c 100%);
+    text-align: center;
+}
+
+.media-cta-container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.media-cta-eyebrow {
+    display: block;
+    margin-bottom: 14px;
+    color: #b7ed4b;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.media-cta-container h2 {
+    margin: 0 0 16px;
+    color: #ffffff;
+    font-size: clamp(2.1rem, 3.8vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+}
+
+.media-cta-container p {
+    margin: 0 0 36px;
+    color: #94a3b8;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.media-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 28px;
+    border-radius: 6px;
+    background: #b7ed4b;
+    border: 1px solid #b7ed4b;
+    color: #08120c;
+    font-size: 14.5px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.media-btn:hover {
+    background: #c7f859;
+    border-color: #c7f859;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(183, 237, 75, 0.32);
+}
+
 </style>
 
 <!-- FULL-VIEWPORT HERO SECTION -->
@@ -1146,12 +1211,21 @@ svg.icon-vector,
     </div>
 </section>
 
-<!-- SECTION 3: CTA BAND (Deep Dark #171c18) -->
-<section class="cta-band">
-    <div class="container">
+<!-- SECTION 3: CTA BAND (Deep Forest Dark) -->
+<section class="media-cta-section section-theme-dark">
+    <div class="media-cta-container">
+        <span class="media-cta-eyebrow">Certifications &amp; Compliance</span>
         <h2>Have questions about our certifications?</h2>
         <p>Reach out and our team will be happy to provide more information or formal compliance packs.</p>
-        <a href="{{ url('/#contact') }}" class="btn btn-primary">Contact Us</a>
+        <div>
+            <a href="{{ url('/#contact') }}" class="media-btn">
+                <span>Contact Us</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </div>
     </div>
 </section>
 

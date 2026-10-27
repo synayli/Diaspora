@@ -1015,7 +1015,7 @@
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        Open directions ↗
+                        Open directions
                     </a>
                 </div>
             </div>

@@ -542,10 +542,17 @@
     border-bottom: 1px solid var(--ds-light-border);
 }
 
+.media-video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(20px, 3vw, 32px);
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
 .media-video-wrap {
     position: relative;
-    max-width: 860px;
-    margin: 0 auto;
+    min-width: 0;
     border-radius: 18px;
     background: #ffffff;
     border: 1px solid #dbe5d8;
@@ -575,6 +582,13 @@
     aspect-ratio: 16 / 9;
     object-fit: cover;
     background: #09130d;
+}
+
+@media (max-width: 768px) {
+    .media-video-grid {
+        grid-template-columns: 1fr;
+        max-width: 560px;
+    }
 }
 
 /* =========================================================
@@ -1304,6 +1318,11 @@
         ['file' => 'images/wangiri_scam.png',      'title' => 'Beware of Wangiri Scam'],
         ['file' => 'images/safe-laptop-usage.png', 'title' => 'Safe Laptop Usage for Windows'],
     ];
+
+        $videos = [
+        ['file' => 'CyberSecurity_Awareness (1).mp4', 'label' => 'diaspora-cyber-awareness.mp4'],
+        ['file' => 'Awareness_Cyberbully.mp4',        'label' => 'diaspora-cyberbully-awareness.mp4'],
+    ];
 @endphp
 
 <div class="media-page">
@@ -1420,17 +1439,21 @@
             </p>
         </div>
 
-        <div class="media-video-wrap">
-            <div class="media-video-topbar">
-                <div class="glass-card-dots">
-                    <span></span><span></span><span></span>
+        <div class="media-video-grid">
+            @foreach ($videos as $video)
+                <div class="media-video-wrap">
+                    <div class="media-video-topbar">
+                        <div class="glass-card-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <span class="media-video-topbar-title">{{ $video['label'] }}</span>
+                    </div>
+                    <video controls preload="metadata" playsinline>
+                        <source src="{{ asset('video/' . rawurlencode($video['file'])) }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
-                <span class="media-video-topbar-title">diaspora-cyber-awareness.mp4</span>
-            </div>
-            <video controls preload="metadata">
-                <source src="{{ asset('video/CyberSecurity_Awareness (1).mp4') }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+            @endforeach
         </div>
     </div>
 </section>

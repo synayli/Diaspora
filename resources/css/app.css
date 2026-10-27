@@ -515,7 +515,7 @@ h1, h2, h3 {
     overflow-wrap: anywhere;
 }
 
-/* Certification logos: original colours, transparent background */
+/* Certification logos: original colours, margins trimmed by zoom */
 
 .footer-certs {
     display: flex;
@@ -533,7 +533,7 @@ h1, h2, h3 {
     aspect-ratio: 2 / 1;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: hidden;           /* clips the zoomed empty margins */
     text-decoration: none;
 }
 
@@ -544,12 +544,11 @@ h1, h2, h3 {
     object-fit: contain;
     transform: scale(2.2);
 
-    /* Soft light halo: tight edge for readability + wide faint glow to blend */
     filter:
         drop-shadow(0 0 0.3px rgba(237, 237, 237, 0.95))
         drop-shadow(0 0 2px rgba(102, 101, 101, 0.74));
 
-    opacity: 0.90;
+    opacity: 0.9;
     transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
@@ -557,6 +556,30 @@ h1, h2, h3 {
     width: 200%;
     height: 200%;
     transform: scale(1);
+}
+
+/* Footer files that are already trimmed: no zoom, fit inside the slot */
+.footer-cert img.logo-fit {
+    width: 100%;
+    height: 100%;
+    transform: scale(1);
+}
+
+/* ISCB: enlarge to match the other logos */
+.footer-cert img.logo-iscb {
+    width: 100%;
+    height: 100%;
+    transform: scale(1.9);
+}
+
+.footer-cert:hover img.logo-iscb,
+.footer-cert:focus-visible img.logo-iscb {
+    transform: scale(2);
+}
+
+.footer-cert:hover img.logo-fit,
+.footer-cert:focus-visible img.logo-fit {
+    transform: scale(1.06);
 }
 
 .footer-cert:hover img,
@@ -647,12 +670,11 @@ h1, h2, h3 {
 @media (prefers-reduced-motion: reduce) {
     .footer-social a,
     .footer-links a,
-    .footer-cert {
+    .footer-cert img {
         transition: none;
     }
 
-    .footer-social a:hover,
-    .footer-cert:hover {
+    .footer-social a:hover {
         transform: none;
     }
 }
