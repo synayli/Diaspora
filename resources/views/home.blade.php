@@ -161,6 +161,7 @@
 
 </section> {{-- END HERO SECTION --}}
 
+{{-- client logo carousel --}}
 @php
     // Default: all clients use .png
     $extensions = array_fill(1, 38, 'png');
@@ -174,29 +175,28 @@
     $clientsRow2 = collect(range(21, 38))->map(fn($i) => "client-$i.{$extensions[$i]}");
 @endphp
 
-<section class="clients-strip">
+<section class="clients-strip" aria-label="Trusted by organisations across Malaysia">
     <div class="container">
         <div class="clients-label">Trusted By Organisations Across Malaysia</div>
     </div>
 
-    {{-- Row 1 — scrolls left --}}
-    <div class="clients-track-wrap">
+    {{-- Row 1: scrolls left --}}
+    <div class="clients-track-wrap" aria-hidden="true">
         <div class="clients-track scroll-left">
             @foreach ($clientsRow1->concat($clientsRow1) as $logo)
-                <img src="{{ asset('images/clients/' . $logo) }}" alt="Client logo">
+                <img src="{{ asset('images/clients/' . $logo) }}" alt="" decoding="async">
             @endforeach
         </div>
     </div>
 
-    {{-- Row 2 — scrolls right --}}
-    <div class="clients-track-wrap">
+    {{-- Row 2: scrolls right --}}
+    <div class="clients-track-wrap" aria-hidden="true">
         <div class="clients-track scroll-right">
             @foreach ($clientsRow2->concat($clientsRow2) as $logo)
-                <img src="{{ asset('images/clients/' . $logo) }}" alt="Client logo">
+                <img src="{{ asset('images/clients/' . $logo) }}" alt="" decoding="async">
             @endforeach
         </div>
     </div>
-
 </section>
 
 {{-- SERVICES --}}
@@ -534,36 +534,39 @@
 
                 {{-- Primary Set --}}
                 <div class="ds-certifications-group">
+                    {{--MOF cert--}}
                     <div class="ds-certification-logo ds-cert-multi" tabindex="0">
                         <div class="ds-certification-card">
                             <img src="{{ asset('images/MOF.png') }}" alt="MOF Bumiputera &amp; Registration" loading="lazy">
-                            <span class="ds-multi-badge">2 Certificates</span>
+                        </div>   {{-- card closes HERE, before the dropdown --}}
 
-                            <div class="ds-cert-dropdown" role="menu">
-                                <a href="{{ asset('documents/Cert-Bumiputera.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" role="menuitem">
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                    <span>Sijil Bumiputera</span>
-                                </a>
-                                <a href="{{ asset('documents/Cert-Pendaftaran-Syarikat.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" role="menuitem">
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                    <span>Sijil Pendaftaran Syarikat</span>
-                                </a>
-                            </div>
+                        <div class="ds-cert-dropdown" role="menu">
+                            <a href="{{ asset('documents/Cert-Bumiputera.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" role="menuitem">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                <span>Sijil Bumiputera</span>
+                            </a>
+                            <a href="{{ asset('documents/Cert-Pendaftaran-Syarikat.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" role="menuitem">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                <span>Sijil Pendaftaran Syarikat</span>
+                            </a>
                         </div>
                     </div>
 
+                    {{--NACSA--}}
                     <a href="{{ asset('documents/Cert-Licence(NACSA).pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="NACSA Licensed Cybersecurity Service Provider">
                         <div class="ds-certification-card">
                             <img class="logo-nacsa" src="{{ asset('images/nacsa.png') }}" alt="NACSA" loading="lazy">
                         </div>
                     </a>
 
+                    {{--ISMS ISO--}}
                     <a href="{{ asset('images/Cert-ISMS-ISO-27001-2022.png') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="CyberSecurity Malaysia PTSP Registered">
                         <div class="ds-certification-card">
                             <img src="{{ asset('images/ISO.png') }}" alt="CyberSecurity Malaysia ISO/IEC 27001" loading="lazy">
                         </div>
                     </a>
 
+                    {{--PTSP--}}
                     <a href="{{ asset('images/Cert-PTSP.png') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="CyberSecurity Malaysia PTSP Registered">
                         <div class="ds-certification-card">
                             <img src="{{ asset('images/ISCB-removebg.png') }}" alt="CyberSecurity Malaysia ISO/IEC 27001" loading="lazy">
@@ -574,36 +577,39 @@
 
                 {{-- Cloned Set for Infinite Loop --}}
                 <div class="ds-certifications-group" aria-hidden="true">
+                    {{--MOF--}}
                     <div class="ds-certification-logo ds-cert-multi" tabindex="-1">
                         <div class="ds-certification-card">
                             <img src="{{ asset('images/MOF.png') }}" alt="" loading="lazy">
-                            <span class="ds-multi-badge">2 Certificates</span>
+                        </div>
 
-                            <div class="ds-cert-dropdown">
-                                <a href="{{ asset('documents/Cert-Bumiputera.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" tabindex="-1">
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                    <span>Sijil Bumiputera</span>
-                                </a>
-                                <a href="{{ asset('documents/Cert-Pendaftaran-Syarikat.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" tabindex="-1">
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                    <span>Sijil Pendaftaran Syarikat</span>
-                                </a>
-                            </div>
+                        <div class="ds-cert-dropdown">
+                            <a href="{{ asset('documents/Cert-Bumiputera.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" tabindex="-1">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                <span>Sijil Bumiputera</span>
+                            </a>
+                            <a href="{{ asset('documents/Cert-Pendaftaran-Syarikat.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" tabindex="-1">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                <span>Sijil Pendaftaran Syarikat</span>
+                            </a>
                         </div>
                     </div>
-
+                    
+                    {{--NACSA--}}
                     <a href="{{ asset('documents/Cert-Licence(NACSA).pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" tabindex="-1">
                         <div class="ds-certification-card">
                             <img class="logo-nacsa" src="{{ asset('images/nacsa.png') }}" alt="" loading="lazy">
                         </div>
                     </a>
 
+                    {{--ISMS ISO--}}
                      <a href="{{ asset('images/Cert-ISMS-ISO-27001-2022.png') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="CyberSecurity Malaysia PTSP Registered">
                         <div class="ds-certification-card">
                             <img src="{{ asset('images/ISO.png') }}" alt="CyberSecurity Malaysia ISO/IEC 27001" loading="lazy">
                         </div>
                     </a>
 
+                    {{--PTSP--}}
                     <a href="{{ asset('images/Cert-PTSP.png') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="CyberSecurity Malaysia PTSP Registered">
                         <div class="ds-certification-card">
                             <img src="{{ asset('images/ISCB-removebg.png') }}" alt="CyberSecurity Malaysia ISO/IEC 27001" loading="lazy">

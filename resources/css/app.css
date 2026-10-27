@@ -184,13 +184,39 @@ h1, h2, h3 {
     color: #171C18;
 }
 
+/* Vector arrow icon in the Let's Talk button */
+.nav-contact-full,
+.nav-contact-short {
+    align-items: center;
+}
+
+.nav-contact-full {
+    display: inline-flex;
+}
+
+.nav-contact-icon {
+    width: 14px;
+    height: 14px;
+    margin-left: 6px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.2s ease;
+}
+
+.nav-actions .btn:hover .nav-contact-icon {
+    transform: translate(2px, -2px);
+}
+
 /* ================================
    NAVBAR: MOBILE MENU (phones only)
 ================================ */
 
 /* Contact button label: full text on desktop only */
-.nav-contact-short,
-.nav-contact-arrow { display: none; }
+.nav-contact-short { display: none; }
 
 /* 3-bar button: hidden on desktop */
 .nav-toggle {
@@ -273,10 +299,9 @@ h1, h2, h3 {
         margin: 0 !important;
     }
 
-    /* "Let's talk ↗" button */
+    /* "Let's Talk" button */
     .nav-contact-full { display: none !important; }
-    .nav-contact-short,
-    .nav-contact-arrow { display: inline !important; }
+    .nav-contact-short { display: inline-flex !important; align-items: center; }
 
     .navbar .nav-actions .btn {
         display: inline-flex !important;
@@ -490,6 +515,66 @@ h1, h2, h3 {
     overflow-wrap: anywhere;
 }
 
+/* Certification logos: original colours, transparent background */
+
+.footer-certs {
+    display: flex;
+    flex-wrap: nowrap;          /* always one line */
+    align-items: center;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.footer-cert {
+    display: flex;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 110px;
+    aspect-ratio: 2 / 1;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.footer-cert img {
+    display: block;
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+    transform: scale(2.2);
+
+    /* Soft light halo: tight edge for readability + wide faint glow to blend */
+    filter:
+        drop-shadow(0 0 0.3px rgba(237, 237, 237, 0.95))
+        drop-shadow(0 0 2px rgba(102, 101, 101, 0.74));
+
+    opacity: 0.90;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.footer-cert img.logo-nacsa {
+    width: 200%;
+    height: 200%;
+    transform: scale(1);
+}
+
+.footer-cert:hover img,
+.footer-cert:focus-visible img {
+    opacity: 1;
+    transform: scale(2.3);
+}
+
+.footer-cert:hover img.logo-nacsa,
+.footer-cert:focus-visible img.logo-nacsa {
+    transform: scale(1.06);
+}
+
+.footer-cert:focus-visible {
+    outline: 2px solid #B7ED4B;
+    outline-offset: 4px;
+}
+
 /* Copyright Bar */
 
 .footer-bottom {
@@ -543,6 +628,11 @@ h1, h2, h3 {
         height: 32px;
     }
 
+    .footer-cert {
+        width: 100px;
+        height: 50px;
+    }
+
     .footer-bottom {
         flex-direction: column;
         gap: 8px;
@@ -556,11 +646,13 @@ h1, h2, h3 {
 
 @media (prefers-reduced-motion: reduce) {
     .footer-social a,
-    .footer-links a {
+    .footer-links a,
+    .footer-cert {
         transition: none;
     }
 
-    .footer-social a:hover {
+    .footer-social a:hover,
+    .footer-cert:hover {
         transform: none;
     }
 }
@@ -4485,8 +4577,21 @@ h1, h2, h3 {
     transform: translateY(-1px);
 }
 
-.ds-enquiry-submit span {
-    font-size: 18px;
+/* Vector arrow icon (replaces the old ↗ text character) */
+.ds-enquiry-submit-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.2s ease;
+}
+
+.ds-enquiry-submit:hover .ds-enquiry-submit-icon {
+    transform: translate(2px, -2px);
 }
 
 .ds-field-error {
@@ -6156,29 +6261,35 @@ h1, h2, h3 {
 ========================================= */
 
 .ds-certifications-carousel {
+    --cert-w: 220px;        /* card width */
+    --cert-h: 110px;        /* card height */
+    --cert-gap: 24px;       /* space between cards */
+    --cert-dd-space: 120px; /* room below the track for the dropdown */
+    --cert-speed: 20s;      /* scroll duration (lower = faster) */
+
     position: relative;
     overflow: hidden;
-    padding: 90px 0;
-    background: #0d1612; /* Deep cyber dark matching your palette */
+    padding: clamp(56px, 8vw, 90px) 0;
+    background: #0d1612;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .ds-certifications-container {
     width: 100%;
-    max-width: 1200px; /* Limits width so it doesn't stretch to the far edge on ultrawide */
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: clamp(20px, 5vw, 64px);  /* Automatically scales smoothly across devices */
+    padding-left: clamp(20px, 5vw, 64px);
     padding-right: clamp(20px, 5vw, 64px);
     box-sizing: border-box;
 }
 
 .ds-certifications-heading {
     max-width: 760px;
-    margin: 0 0 44px 0;
+    margin: 0 0 clamp(28px, 4vw, 44px) 0;
     text-align: left;
-    padding-left: 0; /* Reset any manual padding */
+    padding-left: 0;
 }
 
 .ds-certifications-eyebrow {
@@ -6194,7 +6305,7 @@ h1, h2, h3 {
 .ds-certifications-heading h2 {
     margin: 0;
     color: #f1f5f9;
-    font-size: clamp(28px, 4vw, 44px); /* Scales cleanly from phone to large desktop */
+    font-size: clamp(28px, 4vw, 44px);
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.03em;
@@ -6220,7 +6331,8 @@ h1, h2, h3 {
     width: 100%;
     overflow: hidden;
     position: relative;
-    padding: 12px 0;
+    padding: 12px 0 var(--cert-dd-space);
+    margin-bottom: calc(var(--cert-dd-space) * -0.75);
 
     -webkit-mask-image: linear-gradient(
         to right,
@@ -6241,7 +6353,7 @@ h1, h2, h3 {
 .ds-certifications-track {
     display: flex;
     width: max-content;
-    animation: ds-certifications-scroll 32s linear infinite;
+    animation: ds-certifications-scroll var(--cert-speed) linear infinite;
     will-change: transform;
 }
 
@@ -6249,8 +6361,8 @@ h1, h2, h3 {
     display: flex;
     align-items: center;
     flex: 0 0 auto;
-    gap: 24px;
-    padding-right: 24px;
+    gap: var(--cert-gap);
+    padding-right: var(--cert-gap);
 }
 
 .ds-certification-logo {
@@ -6265,14 +6377,14 @@ h1, h2, h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 220px;          /* Original card width */
-    height: 110px;         /* Original card height */
-    padding: 0;            /* Zero padding so the logo can fill the entire boundary */
+    width: var(--cert-w);
+    height: var(--cert-h);
+    padding: 0;
     background: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 12px;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
-    overflow: hidden;      /* Clips the image whitespace cleanly at the card corners */
+    overflow: hidden;
     transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease;
 }
 
@@ -6281,8 +6393,7 @@ h1, h2, h3 {
     width: 90%;
     height: 90%;
     object-fit: contain;
-    /* Zoom specifically into the logo to cut through the excess transparent/white margins */
-    transform: scale(2.2); 
+    transform: scale(2.2);
     transition: transform 0.28s ease;
 }
 
@@ -6290,13 +6401,13 @@ h1, h2, h3 {
 .ds-certification-logo:hover .ds-certification-card,
 .ds-certification-logo:focus-visible .ds-certification-card {
     transform: translateY(-5px);
-    border-color: #b7ed4b; /* Subtle lime border glow */
+    border-color: #b7ed4b;
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 16px rgba(183, 237, 75, 0.25);
 }
 
 .ds-certification-logo:hover .ds-certification-card img,
 .ds-certification-logo:focus-visible .ds-certification-card img {
-    transform: scale(2.35); /* Subtle scale on hover */
+    transform: scale(2.35);
 }
 
 @keyframes ds-certifications-scroll {
@@ -6315,11 +6426,11 @@ h1, h2, h3 {
 .ds-certification-card img.logo-nacsa {
     width: 200%;
     height: 200%;
-    transform: scale(1); /* Keeps it at standard size without clipping */
+    transform: scale(1);
 }
 
 .ds-certification-logo:hover .ds-certification-card img.logo-nacsa {
-    transform: scale(1.06); /* Clean subtle hover without blowing past the borders */
+    transform: scale(1.06);
 }
 
 /* Multi-Document Card Wrapper */
@@ -6329,24 +6440,10 @@ h1, h2, h3 {
     display: block;
 }
 
-.ds-cert-multi .ds-certification-card {
-    position: relative;
-}
-
-/* Badge Indicating Document Count */
-.ds-multi-badge {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: #172a20;
-    color: var(--ds-accent-lime, #b7ed4b);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    pointer-events: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+/* Lift the hovered card above its neighbours so the dropdown isn't covered */
+.ds-cert-multi:hover,
+.ds-cert-multi:focus-within {
+    z-index: 10;
 }
 
 /* Floating Action Dropdown */
@@ -6355,7 +6452,8 @@ h1, h2, h3 {
     top: calc(100% + 12px);
     left: 50%;
     transform: translateX(-50%) translateY(8px);
-    min-width: 210px;
+    min-width: min(210px, 80vw);
+    max-width: 86vw;
     padding: 6px;
     background: #ffffff;
     border: 1px solid #dce6d8;
@@ -6369,6 +6467,16 @@ h1, h2, h3 {
     pointer-events: none;
     transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
     z-index: 120;
+}
+
+/* Invisible bridge so hover isn't lost in the gap between card and dropdown */
+.ds-cert-dropdown::after {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 0;
+    right: 0;
+    height: 18px;
 }
 
 /* Dropdown Arrow Tip */
@@ -6410,8 +6518,9 @@ h1, h2, h3 {
     color: #172a20;
     font-size: 12.5px;
     font-weight: 600;
+    line-height: 1.3;
     text-decoration: none;
-    white-space: nowrap;
+    white-space: normal;
     transition: background-color 0.18s ease, color 0.18s ease;
 }
 
@@ -6427,6 +6536,81 @@ h1, h2, h3 {
 
 .ds-cert-dropdown-item:hover svg {
     color: #172a20;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+/* Large / ultrawide screens */
+@media (min-width: 1600px) {
+    .ds-certifications-carousel {
+        --cert-w: 260px;
+        --cert-h: 130px;
+        --cert-gap: 32px;
+        --cert-dd-space: 130px;
+        --cert-speed: 24s;
+    }
+    .ds-certifications-container {
+        max-width: 1400px;
+    }
+}
+
+/* Laptops / small desktops */
+@media (max-width: 1100px) {
+    .ds-certifications-carousel {
+        --cert-w: 200px;
+        --cert-h: 100px;
+        --cert-gap: 20px;
+        --cert-speed: 18s;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .ds-certifications-carousel {
+        --cert-w: 170px;
+        --cert-h: 85px;
+        --cert-gap: 16px;
+        --cert-dd-space: 110px;
+        --cert-speed: 15s;
+    }
+    .ds-cert-dropdown-item {
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .ds-certifications-carousel {
+        --cert-w: 140px;
+        --cert-h: 70px;
+        --cert-gap: 12px;
+        --cert-dd-space: 105px;
+        --cert-speed: 12s;
+    }
+    .ds-certifications-slider {
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+        mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+    }
+    .ds-cert-dropdown {
+        min-width: 190px;
+    }
+}
+
+/* Touch devices: no hover, so skip the lift effect */
+@media (hover: none) {
+    .ds-certification-logo:hover .ds-certification-card {
+        transform: none;
+    }
+}
+
+/* Respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+    .ds-certifications-track {
+        animation-duration: 60s;
+    }
 }
 
 /* =====================================================
@@ -6860,13 +7044,22 @@ h1, h2, h3 {
 }
 
 /* ================================
-   CLIENT LOGO CAROUSEL — REFINED & BALANCED
+   CLIENT LOGO CAROUSEL — NEAT / UNIFORM SLOTS
 ================================ */
 
 .clients-strip {
+    --clients-pad-top: 60px;
+    --clients-pad-bottom: 64px;
+    --clients-slot-w: 170px;                  /* every logo gets a slot this wide */
+    --clients-gap: clamp(16px, 2vw, 28px);    /* space between slots */
+    --clients-logo-h: 52px;                   /* normal logo height (unchanged) */
+    --clients-logo-h-lg: 64px;                /* boosted crests / badges (unchanged) */
+    --clients-row-gap: 36px;
+    --clients-speed: 55s;                     /* lower = faster */
+    --clients-fade: 10%;
+
     position: relative;
-    /* Clean breathing room top and bottom */
-    padding: 60px 0 64px;
+    padding: var(--clients-pad-top) 0 var(--clients-pad-bottom);
     background-color: var(--paper, #f7f9f5);
     border-top: 1px solid rgba(0, 0, 0, 0.06);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
@@ -6879,44 +7072,46 @@ h1, h2, h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 22px;
-    font-size: 11px;
+    gap: clamp(12px, 2vw, 22px);
+    font-size: clamp(10px, 1.2vw, 11px);
     font-weight: 750;
     letter-spacing: 0.18em;
     text-transform: uppercase;
+    text-align: center;
     color: #55695c;
-    margin-bottom: 40px;
+    margin-bottom: clamp(24px, 4vw, 40px);
 }
 
 .clients-label::before,
 .clients-label::after {
     content: "";
     display: inline-block;
-    width: 48px;
+    width: clamp(24px, 4vw, 48px);
     height: 1.5px;
     background-color: #55695c;
     opacity: 0.3;
+    flex-shrink: 0;
 }
 
-/* Track Wrapper with smooth gradient edge fade */
+/* Track wrapper with edge fade */
 .clients-track-wrap {
     overflow: hidden;
     position: relative;
     -webkit-mask-image: linear-gradient(
         90deg,
         transparent 0%,
-        #000 10%,
-        #000 90%,
+        #000 var(--clients-fade),
+        #000 calc(100% - var(--clients-fade)),
         transparent 100%
     );
     mask-image: linear-gradient(
         90deg,
         transparent 0%,
-        #000 10%,
-        #000 90%,
+        #000 var(--clients-fade),
+        #000 calc(100% - var(--clients-fade)),
         transparent 100%
     );
-    margin-bottom: 36px;
+    margin-bottom: var(--clients-row-gap);
 }
 
 .clients-track-wrap:last-child {
@@ -6926,46 +7121,39 @@ h1, h2, h3 {
 .clients-track {
     display: flex;
     align-items: center;
-    gap: clamp(54px, 5vw, 76px);
+    gap: var(--clients-gap);
+    padding-right: var(--clients-gap);  /* keeps the -50% loop seamless */
     width: max-content;
+    will-change: transform;
 }
 
 .clients-track.scroll-left {
-    animation: scroll-left 55s linear infinite;
+    animation: scroll-left var(--clients-speed) linear infinite;
 }
 
+/* Row 2 has 18 logos vs 20 in row 1, so it runs 10% shorter
+   to move at exactly the same pace as row 1 */
 .clients-track.scroll-right {
-    animation: scroll-right 55s linear infinite;
+    animation: scroll-right calc(var(--clients-speed) * 0.9) linear infinite;
 }
 
-.clients-track-wrap:hover .clients-track {
-    animation-play-state: paused;
-}
-
-/* Individual Logo Sizing & Uniformity */
+/* Every logo sits centred in an identical slot.
+   Logos are scaled to fit inside the slot, so the rendered size
+   is the same as before (same height, same max width). */
 .clients-track img {
     display: block;
-    height: 52px;
-    max-height: 52px;
-    max-width: 170px;
-    width: auto;
+    flex: 0 0 auto;
+    width: var(--clients-slot-w);
+    height: var(--clients-logo-h);
     object-fit: contain;
-    flex-shrink: 0;
+    object-position: center;
 
     mix-blend-mode: multiply;
-
-    /* Unifies tone: gives soft logos punch while keeping heavy marks crisp */
     filter: grayscale(100%) contrast(135%) brightness(0.88) opacity(0.78);
     transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.clients-track img:hover {
-    filter: grayscale(0%) contrast(100%) brightness(1) opacity(1);
-    transform: scale(1.08);
-    cursor: default;
-}
-
-/* Extra optical compensation for circular crests / badges that appear small */
+/* Boosted size for circular crests / badges that look small */
 .clients-track img[src*="client-10"],
 .clients-track img[src*="client-11"],
 .clients-track img[src*="client-12"],
@@ -6978,56 +7166,117 @@ h1, h2, h3 {
 .clients-track img[src*="client-32"],
 .clients-track img[src*="client-36"],
 .clients-track img[src*="client-37"] {
-    height: 64px;
-    max-height: 64px;
+    height: var(--clients-logo-h-lg);
 }
 
-/* Scroll Keyframes */
+/* Hover effects only on devices that really have hover */
+@media (hover: hover) {
+    .clients-track-wrap:hover .clients-track {
+        animation-play-state: paused;
+    }
+
+    .clients-track img:hover {
+        filter: grayscale(0%) contrast(100%) brightness(1) opacity(1);
+        transform: scale(1.08);
+        cursor: default;
+    }
+}
+
+/* Keyframes */
 @keyframes scroll-left {
     from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    to   { transform: translateX(-50%); }
 }
 
 @keyframes scroll-right {
     from { transform: translateX(-50%); }
-    to { transform: translateX(0); }
+    to   { transform: translateX(0); }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+/* Large / ultrawide screens */
+@media (min-width: 1600px) {
+    .clients-strip {
+        --clients-pad-top: 76px;
+        --clients-pad-bottom: 80px;
+        --clients-slot-w: 200px;
+        --clients-gap: 36px;
+        --clients-logo-h: 62px;
+        --clients-logo-h-lg: 76px;
+        --clients-row-gap: 44px;
+        --clients-speed: 65s;
+        --clients-fade: 12%;
+    }
+    .clients-label {
+        font-size: 12px;
+    }
+}
+
+/* Small laptops */
+@media (max-width: 1100px) {
+    .clients-strip {
+        --clients-pad-top: 52px;
+        --clients-pad-bottom: 54px;
+        --clients-slot-w: 155px;
+        --clients-gap: 22px;
+        --clients-logo-h: 48px;
+        --clients-logo-h-lg: 58px;
+        --clients-speed: 50s;
+    }
 }
 
 /* Tablet */
 @media (max-width: 900px) {
     .clients-strip {
-        padding: 44px 0;
-    }
-    .clients-track {
-        gap: 46px;
-    }
-    .clients-track img {
-        height: 46px;
-        max-height: 46px;
-        max-width: 145px;
+        --clients-pad-top: 44px;
+        --clients-pad-bottom: 44px;
+        --clients-slot-w: 140px;
+        --clients-gap: 20px;
+        --clients-logo-h: 44px;
+        --clients-logo-h-lg: 52px;
+        --clients-row-gap: 28px;
+        --clients-speed: 42s;
     }
 }
 
 /* Mobile */
 @media (max-width: 600px) {
     .clients-strip {
-        padding: 34px 0;
+        --clients-pad-top: 34px;
+        --clients-pad-bottom: 34px;
+        --clients-slot-w: 115px;
+        --clients-gap: 16px;
+        --clients-logo-h: 36px;
+        --clients-logo-h-lg: 44px;
+        --clients-row-gap: 20px;
+        --clients-speed: 32s;
+        --clients-fade: 6%;
     }
-    .clients-label {
-        font-size: 10px;
-        gap: 12px;
-        margin-bottom: 24px;
+}
+
+/* Very small phones */
+@media (max-width: 400px) {
+    .clients-strip {
+        --clients-slot-w: 100px;
+        --clients-gap: 12px;
+        --clients-logo-h: 32px;
+        --clients-logo-h-lg: 38px;
+        --clients-speed: 28s;
     }
-    .clients-track {
-        gap: 36px;
+    .clients-label::before,
+    .clients-label::after {
+        display: none;
     }
-    .clients-track img {
-        height: 38px;
-        max-height: 38px;
-        max-width: 120px;
-    }
-    .clients-track-wrap {
-        margin-bottom: 20px;
+}
+
+/* Respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+    .clients-track.scroll-left,
+    .clients-track.scroll-right {
+        animation-duration: 120s;
     }
 }
 

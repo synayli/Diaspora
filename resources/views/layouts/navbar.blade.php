@@ -50,8 +50,18 @@
         {{-- Contact action and mobile menu --}}
         <div class="nav-actions">
             <a href="{{ url('/#contact') }}" class="btn btn-primary nav-contact">
-                <span class="nav-contact-full">Let's Talk ↗</span>
-                <span class="nav-contact-short">Let's Talk ↗</span>
+                <span class="nav-contact-full">
+                    Let's Talk
+                    <svg class="nav-contact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
+                </span>
+                <span class="nav-contact-short">
+                    Let's Talk
+                    <svg class="nav-contact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
+                </span>
             </a>
 
             <button

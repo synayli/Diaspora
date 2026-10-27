@@ -100,7 +100,10 @@
         </p>
 
         <button type="submit" class="ds-enquiry-submit">
-            Send your enquiry <span aria-hidden="true">↗</span>
+            Send your enquiry
+            <svg class="ds-enquiry-submit-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M7 17 17 7M7 7h10v10" />
+            </svg>
         </button>
     </form>
 </div>

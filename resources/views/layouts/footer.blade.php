@@ -54,7 +54,24 @@
                     <div class="footer-contact-icon">✉️</div>
                     <p>info@diaspora-tech.com</p>
                 </div>
-            </div>
+
+                <div class="footer-certs">
+                    <a href="{{ asset('documents/Cert-Licence(NACSA).pdf') }}" target="_blank" rel="noopener noreferrer"
+                       class="footer-cert" title="NACSA Licensed Cybersecurity Service Provider">
+                        <img class="logo-nacsa" src="{{ asset('images/nacsa.png') }}" alt="NACSA" loading="lazy">
+                    </a>
+
+                    <a href="{{ asset('images/Cert-ISMS-ISO-27001-2022.png') }}" target="_blank" rel="noopener noreferrer"
+                       class="footer-cert" title="ISO/IEC 27001 Certified ISMS">
+                        <img src="{{ asset('images/ISO-removebg.png') }}" alt="ISO/IEC 27001 certification" loading="lazy">
+                    </a>
+
+                    <a href="{{ asset('images/Cert-PTSP.png') }}" target="_blank" rel="noopener noreferrer"
+                       class="footer-cert" title="ISCB PTSP Registered">
+                        <img src="{{ asset('images/ISCB-removebg.png') }}" alt="ISCB Penetration Test Service Provider (PTSP)" loading="lazy">
+                    </a>
+                </div>
+            </div> {{-- end Get In Touch column --}}
 
         </div>
 
