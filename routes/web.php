@@ -1,12 +1,26 @@
 <?php
 
 use App\Services\HackerNewsFeed;
+use App\Services\Nc4AdvisoryFeed;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
-// Homepage with latest cybersecurity insights
-Route::get('/', function (HackerNewsFeed $feed) {
-    $insights = $feed->latest(6);
+// Homepage: 3 Hacker News articles + 3 NC4 advisories
+Route::get('/', function (
+    HackerNewsFeed $feed,
+    Nc4AdvisoryFeed $nc4Feed
+) {
+    $hackerNews = $feed->latest(3)->map(function ($article) {
+        $article['source'] = 'The Hacker News';
+
+        return $article;
+    });
+
+    $nc4Advisories = $nc4Feed->latest(3);
+
+    $insights = $hackerNews
+        ->concat($nc4Advisories)
+        ->values();
 
     return view('home', compact('insights'));
 })->name('home');
@@ -16,11 +30,27 @@ Route::view('/certification', 'certification')
     ->name('certification');
 
 // Media page
-Route::get('/media', function (HackerNewsFeed $feed) {
-    $insights = $feed->latest(6);
+
+Route::get('/media', function (
+    HackerNewsFeed $feed,
+    Nc4AdvisoryFeed $nc4Feed
+) {
+    $hackerNews = collect($feed->latest(3))
+        ->map(function ($article) {
+            $article['source'] = 'The Hacker News';
+
+            return $article;
+        });
+
+    $nc4Advisories = collect($nc4Feed->latest(3));
+
+    $insights = $hackerNews
+        ->concat($nc4Advisories)
+        ->values();
 
     return view('media', compact('insights'));
 })->name('media');
+
 
 // Individual service pages
 Route::view(

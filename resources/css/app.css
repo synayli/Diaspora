@@ -158,6 +158,10 @@ h1, h2, h3 {
 }
 
 .nav-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
     margin-left: 12px;
     padding: 10px 22px;
     border-radius: 6px;
@@ -188,17 +192,19 @@ h1, h2, h3 {
 .nav-contact-full,
 .nav-contact-short {
     align-items: center;
+    gap: 6px;
+    white-space: nowrap;
 }
 
 .nav-contact-full {
     display: inline-flex;
 }
 
-.nav-contact-icon {
+.nav-actions .btn .nav-contact-icon {
     width: 14px;
     height: 14px;
-    margin-left: 6px;
-    flex-shrink: 0;
+    margin-left: 0;          /* spacing now comes from the gap above */
+    flex: none;
     fill: none;
     stroke: currentColor;
     stroke-width: 2.5;
@@ -2693,17 +2699,29 @@ h1, h2, h3 {
 }
 
 /* =====================================================
-   3 CREDENTIALS LINK
+   3 ACTION LINKS (COMPANY PROFILE + CREDENTIALS)
 ===================================================== */
 
-.ds-about-credentials {
+.ds-about-content .ds-about-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;   /* was space-between */
+    gap: 28px;                     /* distance between the two links */
+    margin-top: 28px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));  /* both links same width */
+}
+
+.ds-about-content .ds-about-profile,
+.ds-about-content .ds-about-credentials {
     position: relative;
     display: inline-flex;
+    flex: 0 1 auto;
     align-items: center;
     justify-content: space-between;
-    gap: 28px;
-    max-width: 100%;
-    margin-top: 28px;
+    gap: 14px;
+    min-width: 0;
+    margin: 0;
     padding: 13px 0;
 
     border-bottom: 1px solid #CAD6C0;
@@ -2712,46 +2730,61 @@ h1, h2, h3 {
     font-size: 12px;
     line-height: 1.7;
     font-weight: 700;
+    white-space: nowrap;
     text-decoration: none;
 
-    transition:
-        color 0.25s ease,
-        border-color 0.25s ease;
+    transition: color 0.25s ease, border-color 0.25s ease;
 }
 
-.ds-about-credentials::after {
+.ds-about-content .ds-about-profile::after,
+.ds-about-content .ds-about-credentials::after {
     content: "";
     position: absolute;
     right: 0;
     bottom: -1px;
     left: 0;
     height: 2px;
-
     background: #83A64E;
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.25s ease;
 }
 
-.ds-about-credentials span {
-    flex-shrink: 0;
-    font-size: 22px;
-    line-height: 1;
-
-    transition: transform 0.25s ease;
-}
-
-.ds-about-credentials:hover {
+.ds-about-content .ds-about-profile:hover,
+.ds-about-content .ds-about-credentials:hover {
     color: #527B36;
     border-color: #83A64E;
 }
 
-.ds-about-credentials:hover::after {
+.ds-about-content .ds-about-profile:hover::after,
+.ds-about-content .ds-about-credentials:hover::after {
     transform: scaleX(1);
 }
 
-.ds-about-credentials:hover span {
+/* Icons: same arrow on both links */
+.ds-about-content .ds-about-profile .ds-arrow-icon,
+.ds-about-content .ds-about-credentials .ds-arrow-icon {
+    display: inline-flex;
+    flex: none;
+    transition: transform 0.25s ease;
+}
+
+.ds-about-content .ds-about-profile:hover .ds-arrow-icon,
+.ds-about-content .ds-about-credentials:hover .ds-arrow-icon {
     transform: translate(4px, -3px);
+}
+
+/* Small screens: stack, full width */
+@media (max-width: 480px) {
+    .ds-about-content .ds-about-actions {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .ds-about-content .ds-about-profile,
+    .ds-about-content .ds-about-credentials {
+        width: 100%;
+    }
 }
 
 /* =====================================================
@@ -2897,9 +2930,13 @@ h1, h2, h3 {
         font-size: 9px;
     }
 
-    .ds-about-credentials {
-        gap: 20px;
+    .ds-about-actions {
         margin-top: 24px;
+        gap: 4px 20px;
+    }
+
+    .ds-about-profile,
+    .ds-about-credentials {
         font-size: 12px;
     }
 }
@@ -2931,6 +2968,12 @@ h1, h2, h3 {
         gap: 10px;
         font-size: 10px;
     }
+
+    .ds-about-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
 }
 
 /* =====================================================
@@ -2941,6 +2984,9 @@ h1, h2, h3 {
     .ds-about-panel,
     .ds-about-focus,
     .ds-about-approach-row,
+    .ds-about-profile,
+    .ds-about-profile::after,
+    .ds-about-profile-icon,
     .ds-about-credentials,
     .ds-about-credentials::after,
     .ds-about-credentials span {
@@ -6287,7 +6333,7 @@ h1, h2, h3 {
     --cert-h: 110px;        /* card height */
     --cert-gap: 24px;       /* space between cards */
     --cert-dd-space: 120px; /* room below the track for the dropdown */
-    --cert-speed: 20s;      /* scroll duration (lower = faster) */
+    --cert-speed: 20s;      /* scroll duration (used only if the script fails) */
 
     position: relative;
     overflow: hidden;
@@ -6348,6 +6394,11 @@ h1, h2, h3 {
     line-height: 1.6;
 }
 
+/* Wrapper that holds the slider and the two arrows */
+.ds-certifications-carousel-wrap {
+    position: relative;
+}
+
 /* Vignette Masking */
 .ds-certifications-slider {
     width: 100%;
@@ -6377,6 +6428,11 @@ h1, h2, h3 {
     width: max-content;
     animation: ds-certifications-scroll var(--cert-speed) linear infinite;
     will-change: transform;
+}
+
+/* When the script is running, it moves the track itself */
+.ds-certifications-slider.is-js .ds-certifications-track {
+    animation: none;
 }
 
 .ds-certifications-group {
@@ -6524,7 +6580,7 @@ h1, h2, h3 {
     transform: translateX(-50%) translateY(0);
 }
 
-/* Pause Carousel While Interacting with Dropdown */
+/* Pause Carousel While Interacting with Dropdown (fallback when no script) */
 .ds-certifications-slider:has(.ds-cert-multi:hover) .ds-certifications-track,
 .ds-certifications-slider:has(.ds-cert-multi:focus-within) .ds-certifications-track {
     animation-play-state: paused !important;
@@ -6558,6 +6614,74 @@ h1, h2, h3 {
 
 .ds-cert-dropdown-item:hover svg {
     color: #172a20;
+}
+
+/* =========================================
+   CAROUSEL ARROWS (BACK / FORTH)
+========================================= */
+
+.ds-cert-arrow {
+    position: absolute;
+    top: calc(12px + var(--cert-h) / 2);   /* middle of the cards */
+    transform: translateY(-50%);
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid rgba(183, 237, 75, 0.35);
+    border-radius: 50%;
+    background: rgba(13, 22, 18, 0.88);
+    color: #b7ed4b;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.ds-cert-prev { left: 0; }
+.ds-cert-next { right: 0; }
+
+.ds-cert-arrow:hover {
+    background: #b7ed4b;
+    border-color: #b7ed4b;
+    color: #0d1612;
+}
+
+.ds-cert-arrow:active {
+    transform: translateY(-50%) scale(0.92);
+}
+
+.ds-cert-arrow:focus-visible {
+    outline: 2px solid #b7ed4b;
+    outline-offset: 3px;
+}
+
+.ds-cert-arrow svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Drag to scroll */
+.ds-certifications-slider.is-js {
+    cursor: grab;
+    touch-action: pan-y;      /* vertical page scroll still works on phones */
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.ds-certifications-slider.is-dragging {
+    cursor: grabbing;
+}
+
+.ds-certification-card img {
+    -webkit-user-drag: none;
 }
 
 /* =========================================
@@ -6601,6 +6725,14 @@ h1, h2, h3 {
         font-size: 12px;
         padding: 10px 12px;
     }
+    .ds-cert-arrow {
+        width: 38px;
+        height: 38px;
+    }
+    .ds-cert-arrow svg {
+        width: 18px;
+        height: 18px;
+    }
 }
 
 /* Phones */
@@ -6618,6 +6750,10 @@ h1, h2, h3 {
     }
     .ds-cert-dropdown {
         min-width: 190px;
+    }
+    .ds-cert-arrow {
+        width: 34px;
+        height: 34px;
     }
 }
 

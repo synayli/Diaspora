@@ -52,13 +52,21 @@
             <a href="{{ url('/#contact') }}" class="btn btn-primary nav-contact">
                 <span class="nav-contact-full">
                     Let's Talk
-                    <svg class="nav-contact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <svg class="nav-contact-icon" width="14" height="14" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2.5"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         style="width:14px;height:14px;flex:none"
+                         aria-hidden="true" focusable="false">
                         <path d="M7 17 17 7M7 7h10v10" />
                     </svg>
                 </span>
                 <span class="nav-contact-short">
                     Let's Talk
-                    <svg class="nav-contact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <svg class="nav-contact-icon" width="14" height="14" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2.5"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         style="width:14px;height:14px;flex:none"
+                         aria-hidden="true" focusable="false">
                         <path d="M7 17 17 7M7 7h10v10" />
                     </svg>
                 </span>

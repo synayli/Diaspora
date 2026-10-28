@@ -501,20 +501,55 @@
 
             </div>
 
-            <a href="{{ url('/certification') }}" class="ds-about-credentials">
-                View our published credentials
-                <span class="ds-arrow-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M7 17 17 7M7 7h10v10" />
-                    </svg>
-                </span>
-            </a>
+            <div class="ds-about-actions">
+
+                {{-- Left: Company profile --}}
+                <a href="{{ asset('documents/Company-Profile-2026.pdf') }}"
+                target="_blank" rel="noopener noreferrer"
+                class="ds-about-profile">
+                    <span>Company profile</span>
+                    <span class="ds-arrow-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7 17 17 7M7 7h10v10" />
+                        </svg>
+                    </span>
+                </a>
+
+                {{-- Right: Credentials --}}
+                <a href="{{ url('/certification') }}" class="ds-about-credentials">
+                    <span>View our published credentials</span>
+                    <span class="ds-arrow-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7 17 17 7M7 7h10v10" />
+                        </svg>
+                    </span>
+                </a>
+
+            </div>
 
         </div>
     </div>
 </section>
 
 {{-- CERTIFICATIONS, LICENCES & REGISTRATIONS --}}
+@php
+    $mofDocs = [
+        ['Sijil Bumiputera', 'documents/Cert-Bumiputera.pdf'],
+        ['Sijil Pendaftaran Syarikat', 'documents/Cert-Pendaftaran-Syarikat.pdf'],
+    ];
+
+    $certs = [
+        ['file' => 'documents/Cert-Licence(NACSA).pdf', 'img' => 'images/nacsa.png', 'class' => 'logo-nacsa',
+         'alt' => 'NACSA', 'title' => 'NACSA Licensed Cybersecurity Service Provider'],
+        ['file' => 'images/Cert-ISMS-ISO-27001-2022.png', 'img' => 'images/ISO.png', 'class' => '',
+         'alt' => 'ISO/IEC 27001 certification', 'title' => 'ISO/IEC 27001 Certified ISMS'],
+        ['file' => 'images/Cert-PTSP.png', 'img' => 'images/ISCB-removebg.png', 'class' => '',
+         'alt' => 'ISCB Penetration Test Service Provider (PTSP)', 'title' => 'ISCB PTSP Registered'],
+    ];
+@endphp
+
 <section class="ds-certifications-carousel section-light" id="certifications">
     <div class="ds-certifications-container">
 
@@ -529,96 +564,66 @@
             </p>
         </div>
 
-        <div class="ds-certifications-slider reveal">
-            <div class="ds-certifications-track">
+        <div class="ds-certifications-carousel-wrap">
 
-                {{-- Primary Set --}}
-                <div class="ds-certifications-group">
-                    {{--MOF cert--}}
-                    <div class="ds-certification-logo ds-cert-multi" tabindex="0">
-                        <div class="ds-certification-card">
-                            <img src="{{ asset('images/MOF.png') }}" alt="MOF Bumiputera &amp; Registration" loading="lazy">
-                        </div>   {{-- card closes HERE, before the dropdown --}}
+            <button type="button" class="ds-cert-arrow ds-cert-prev" data-cert-prev aria-label="Previous certificate">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
 
-                        <div class="ds-cert-dropdown" role="menu">
-                            <a href="{{ asset('documents/Cert-Bumiputera.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" role="menuitem">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                <span>Sijil Bumiputera</span>
-                            </a>
-                            <a href="{{ asset('documents/Cert-Pendaftaran-Syarikat.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" role="menuitem">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                <span>Sijil Pendaftaran Syarikat</span>
-                            </a>
+            <div class="ds-certifications-slider reveal">
+                <div class="ds-certifications-track">
+
+                    {{-- First pass = real set, second pass = clone for the infinite loop --}}
+                    @foreach ([false, true] as $clone)
+                        <div class="ds-certifications-group" @if ($clone) aria-hidden="true" @endif>
+
+                            {{-- MOF (two documents) --}}
+                            <div class="ds-certification-logo ds-cert-multi" tabindex="{{ $clone ? -1 : 0 }}">
+                                <div class="ds-certification-card">
+                                    <img src="{{ asset('images/MOF.png') }}"
+                                         alt="{{ $clone ? '' : 'MOF Bumiputera & Registration' }}"
+                                         loading="lazy">
+                                </div>
+
+                                <div class="ds-cert-dropdown" @unless ($clone) role="menu" @endunless>
+                                    @foreach ($mofDocs as [$label, $path])
+                                        <a href="{{ asset($path) }}"
+                                           target="_blank" rel="noopener noreferrer"
+                                           class="ds-cert-dropdown-item"
+                                           @if ($clone) tabindex="-1" @else role="menuitem" @endif>
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                            <span>{{ $label }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            {{-- NACSA, ISO, PTSP --}}
+                            @foreach ($certs as $cert)
+                                <a href="{{ asset($cert['file']) }}"
+                                   target="_blank" rel="noopener noreferrer"
+                                   class="ds-certification-logo"
+                                   @if ($clone) tabindex="-1" @else title="{{ $cert['title'] }}" @endif>
+                                    <div class="ds-certification-card">
+                                        <img @if ($cert['class']) class="{{ $cert['class'] }}" @endif
+                                             src="{{ asset($cert['img']) }}"
+                                             alt="{{ $clone ? '' : $cert['alt'] }}"
+                                             loading="lazy">
+                                    </div>
+                                </a>
+                            @endforeach
+
                         </div>
-                    </div>
+                    @endforeach
 
-                    {{--NACSA--}}
-                    <a href="{{ asset('documents/Cert-Licence(NACSA).pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="NACSA Licensed Cybersecurity Service Provider">
-                        <div class="ds-certification-card">
-                            <img class="logo-nacsa" src="{{ asset('images/nacsa.png') }}" alt="NACSA" loading="lazy">
-                        </div>
-                    </a>
-
-                    {{--ISMS ISO--}}
-                    <a href="{{ asset('images/Cert-ISMS-ISO-27001-2022.png') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="CyberSecurity Malaysia PTSP Registered">
-                        <div class="ds-certification-card">
-                            <img src="{{ asset('images/ISO.png') }}" alt="CyberSecurity Malaysia ISO/IEC 27001" loading="lazy">
-                        </div>
-                    </a>
-
-                    {{--PTSP--}}
-                    <a href="{{ asset('images/Cert-PTSP.png') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="CyberSecurity Malaysia PTSP Registered">
-                        <div class="ds-certification-card">
-                            <img src="{{ asset('images/ISCB-removebg.png') }}" alt="CyberSecurity Malaysia ISO/IEC 27001" loading="lazy">
-                        </div>
-                    </a>
-                    
                 </div>
-
-                {{-- Cloned Set for Infinite Loop --}}
-                <div class="ds-certifications-group" aria-hidden="true">
-                    {{--MOF--}}
-                    <div class="ds-certification-logo ds-cert-multi" tabindex="-1">
-                        <div class="ds-certification-card">
-                            <img src="{{ asset('images/MOF.png') }}" alt="" loading="lazy">
-                        </div>
-
-                        <div class="ds-cert-dropdown">
-                            <a href="{{ asset('documents/Cert-Bumiputera.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" tabindex="-1">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                <span>Sijil Bumiputera</span>
-                            </a>
-                            <a href="{{ asset('documents/Cert-Pendaftaran-Syarikat.pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-cert-dropdown-item" tabindex="-1">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                <span>Sijil Pendaftaran Syarikat</span>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    {{--NACSA--}}
-                    <a href="{{ asset('documents/Cert-Licence(NACSA).pdf') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" tabindex="-1">
-                        <div class="ds-certification-card">
-                            <img class="logo-nacsa" src="{{ asset('images/nacsa.png') }}" alt="" loading="lazy">
-                        </div>
-                    </a>
-
-                    {{--ISMS ISO--}}
-                     <a href="{{ asset('images/Cert-ISMS-ISO-27001-2022.png') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="CyberSecurity Malaysia PTSP Registered">
-                        <div class="ds-certification-card">
-                            <img src="{{ asset('images/ISO.png') }}" alt="CyberSecurity Malaysia ISO/IEC 27001" loading="lazy">
-                        </div>
-                    </a>
-
-                    {{--PTSP--}}
-                    <a href="{{ asset('images/Cert-PTSP.png') }}" target="_blank" rel="noopener noreferrer" class="ds-certification-logo" title="CyberSecurity Malaysia PTSP Registered">
-                        <div class="ds-certification-card">
-                            <img src="{{ asset('images/ISCB-removebg.png') }}" alt="CyberSecurity Malaysia ISO/IEC 27001" loading="lazy">
-                        </div>
-                    </a>
-
             </div>
-        </div>
 
+            <button type="button" class="ds-cert-arrow ds-cert-next" data-cert-next aria-label="Next certificate">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+
+        </div>
     </div>
 </section>
 
@@ -818,9 +823,7 @@
 <section class="ds-insights-section section section-light">
     <div class="container">
 
-        {{-- Section heading --}}
         <div class="ds-insights-heading reveal">
-
             <div class="ds-insights-eyebrow">
                 06 / INSIGHTS &amp; UPDATES
             </div>
@@ -833,12 +836,11 @@
                     </h2>
 
                     <p>
-                        Explore current threats, emerging vulnerabilities
-                        and developments shaping the security landscape.
+                        Explore global cybersecurity news and official
+                        Malaysian cyber alerts and advisories.
                     </p>
                 </div>
             </div>
-
         </div>
 
         @php
@@ -848,10 +850,10 @@
                         && !empty($article['url'])
                         && !empty($article['title']);
                 })
-                ->take(6);
+                ->take(6)
+                ->values();
         @endphp
 
-        {{-- Article grid --}}
         <div class="ds-insights-grid reveal-stagger">
             @forelse ($validInsights as $article)
                 <a
@@ -883,7 +885,9 @@
                         <div class="ds-insights-source">
                             <span class="ds-insights-source-dot"></span>
 
-                            <span>The Hacker News</span>
+                            <span>
+                                {{ $article['source'] ?? 'The Hacker News' }}
+                            </span>
 
                             @if (!empty($article['published_at']))
                                 <span class="ds-insights-date">
@@ -897,7 +901,6 @@
                                 <path d="M7 17 17 7M7 7h10v10" />
                             </svg>
                         </span>
-
                     </div>
                 </a>
             @empty
@@ -908,37 +911,53 @@
 
                     <p>
                         Please check back soon for the latest cybersecurity
-                        news and developments.
+                        news and official advisories.
                     </p>
                 </div>
             @endforelse
         </div>
 
-        {{-- View all --}}
         <div class="ds-insights-bottom reveal">
             <p>
-                Independent reporting. A clearer view of the threat landscape.
+                Global cybersecurity news. Official Malaysian threat updates.
             </p>
 
-            <a
-                href="https://thehackernews.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="ds-insights-view-all"
-            >
-                <span>Explore all news</span>
-                
-                <span class="ds-arrow-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M7 17 17 7M7 7h10v10" />
-                    </svg>
-                </span>
+            <div class="ds-insights-links">
+                <a
+                    href="https://thehackernews.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="ds-insights-view-all"
+                >
+                    <span>Explore all news</span>
 
-            </a>
+                    <span class="ds-arrow-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M7 17 17 7M7 7h10v10" />
+                        </svg>
+                    </span>
+                </a>
+
+                <a
+                    href="https://www.nc4.gov.my/alertAdvisory?lang=en"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="ds-insights-view-all"
+                >
+                    <span>View NC4 alerts &amp; advisories</span>
+
+                    <span class="ds-arrow-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M7 17 17 7M7 7h10v10" />
+                        </svg>
+                    </span>
+                </a>
+            </div>
         </div>
 
     </div>
 </section>
+
 
 {{-- CONTACT --}}
 <section class="ds-conversation" id="contact">
@@ -1037,7 +1056,6 @@
         <div class="ds-conversation-form reveal">
             @include('partials.contact-form')
         </div>
-
     </div>
 </section>
 
@@ -1052,10 +1070,6 @@
 
             mapElement.dataset.initialized = 'true';
 
-            /*
-            * Approximate UPM-MTDC Technology Centre area.
-            * Verify the exact Block TG1-5 pin before publishing.
-            */
             const officeLocation = [2.9995, 101.7195];
 
             const map = L.map(mapElement, {
@@ -1087,9 +1101,120 @@
                 map.invalidateSize();
             }, 150);
         });
+
+
+        (function () {
+            var slider = document.querySelector('.ds-certifications-slider');
+            if (!slider) return;
+
+            var track  = slider.querySelector('.ds-certifications-track');
+            var groups = track.querySelectorAll('.ds-certifications-group');
+            var prev   = document.querySelector('[data-cert-prev]');
+            var next   = document.querySelector('[data-cert-next]');
+            if (groups.length < 2) return;
+
+            var LOOP_SECONDS = 20;    // time for one full loop (lower = faster)
+            var STEP_CARDS   = 1;     // cards moved per arrow click
+            var HOLD_MS      = 2500;  // pause auto-scroll after dragging or clicking
+            var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            var offset = 0, loopW = 0, step = 0;
+            var anim = null, holdUntil = 0, last = null;
+            var drag = null, suppressClick = false;
+
+            function measure() {
+                loopW = groups[0].offsetWidth;
+                var card = groups[0].querySelector('.ds-certification-logo');
+                var gap  = parseFloat(getComputedStyle(groups[0]).columnGap) || 0;
+                step = card ? (card.offsetWidth + gap) * STEP_CARDS : 0;
+            }
+
+            function wrap() {
+                if (!loopW) return;
+                var w = ((offset % loopW) + loopW) % loopW;
+                var d = w - offset;
+                offset = w;
+                if (anim) { anim.from += d; anim.to += d; }
+            }
+
+            function tick(ts) {
+                if (last === null) last = ts;
+                var dt = Math.min((ts - last) / 1000, 0.1);
+                last = ts;
+
+                if (anim) {
+                    var p = Math.min((ts - anim.start) / anim.dur, 1);
+                    offset = anim.from + (anim.to - anim.from) * (1 - Math.pow(1 - p, 3));
+                    if (p === 1) { anim = null; holdUntil = ts + HOLD_MS; }
+                } else if (!drag && !reduce && loopW && ts > holdUntil &&
+                        !slider.matches(':hover') && !slider.matches(':focus-within')) {
+                    offset += (loopW / LOOP_SECONDS) * dt;
+                }
+
+                wrap();
+                track.style.transform = 'translate3d(' + (-offset) + 'px,0,0)';
+                requestAnimationFrame(tick);
+            }
+
+            function go(dir) {
+                if (!loopW) measure();
+                var base = anim ? anim.to : offset;
+                anim = { from: offset, to: base + dir * step, start: performance.now(), dur: 450 };
+            }
+
+            /* Arrows */
+            if (prev) prev.addEventListener('click', function () { go(-1); });
+            if (next) next.addEventListener('click', function () { go(1); });
+
+            /* Drag / swipe */
+            slider.addEventListener('pointerdown', function (e) {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                drag = { x: e.clientX, off: offset, moved: false };
+                anim = null;
+            });
+
+            slider.addEventListener('pointermove', function (e) {
+                if (!drag) return;
+                var dx = e.clientX - drag.x;
+                if (!drag.moved && Math.abs(dx) > 6) {
+                    drag.moved = true;
+                    slider.classList.add('is-dragging');
+                    try { slider.setPointerCapture(e.pointerId); } catch (err) {}
+                }
+                if (drag.moved) offset = drag.off - dx;
+            });
+
+            function endDrag() {
+                if (!drag) return;
+                if (drag.moved) {
+                    suppressClick = true;
+                    setTimeout(function () { suppressClick = false; }, 60);
+                    holdUntil = performance.now() + HOLD_MS;
+                }
+                drag = null;
+                slider.classList.remove('is-dragging');
+            }
+            slider.addEventListener('pointerup', endDrag);
+            slider.addEventListener('pointercancel', endDrag);
+
+            /* A drag must not open the certificate link under the finger */
+            slider.addEventListener('click', function (e) {
+                if (suppressClick) { e.preventDefault(); e.stopPropagation(); }
+            }, true);
+
+            /* Stop the browser's own link/image dragging */
+            track.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+            window.addEventListener('resize', measure);
+            window.addEventListener('load', measure);
+
+            measure();
+            slider.classList.add('is-js');
+            requestAnimationFrame(tick);
+        })();
+
     </script>
 
-   
 @endpush
 
 @endsection

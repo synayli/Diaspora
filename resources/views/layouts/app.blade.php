@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
     <title>@yield('title', 'Diaspora')</title>
 
@@ -48,9 +46,11 @@
     </button>
 
     <script>
+        /* === NAVIGATION MENU === */
         document.addEventListener('DOMContentLoaded', function () {
             var toggle = document.getElementById('navToggle');
-            var links  = document.getElementById('navLinks');
+            var links = document.getElementById('navLinks');
+
             if (!toggle || !links) return;
 
             function setOpen(open) {
@@ -68,7 +68,9 @@
             });
 
             document.addEventListener('click', function (e) {
-                if (!links.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
+                if (!links.contains(e.target) && !toggle.contains(e.target)) {
+                    setOpen(false);
+                }
             });
 
             document.addEventListener('keydown', function (e) {
@@ -80,53 +82,68 @@
             });
         });
 
-        // nav
+        /* === HOMEPAGE NAVIGATION SCROLL SPY === */
         document.addEventListener('DOMContentLoaded', function () {
-        // Only run scroll spy on the homepage where the sections exist
-        if (window.location.pathname !== '/' && window.location.pathname !== '') {
-            return;
-        }
-
-        var hashLinks = document.querySelectorAll('.nav-links a[data-section]');
-        var sections = [];
-
-        hashLinks.forEach(function (link) {
-            var id = link.getAttribute('data-section');
-            var section = document.getElementById(id);
-            if (section) {
-                sections.push({ el: section, link: link });
+            if (
+                window.location.pathname !== '/' &&
+                window.location.pathname !== ''
+            ) {
+                return;
             }
-        });
 
-        function updateActiveNav() {
-            var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-            var headerOffset = 120; // Accounts for navbar height
-            var currentActive = null;
+            var hashLinks = document.querySelectorAll(
+                '.nav-links a[data-section]'
+            );
 
-            sections.forEach(function (item) {
-                var top = item.el.offsetTop - headerOffset;
-                var bottom = top + item.el.offsetHeight;
+            var sections = [];
 
-                if (scrollY >= top && scrollY < bottom) {
-                    currentActive = item.link;
+            hashLinks.forEach(function (link) {
+                var id = link.getAttribute('data-section');
+                var section = document.getElementById(id);
+
+                if (section) {
+                    sections.push({
+                        el: section,
+                        link: link
+                    });
                 }
             });
 
-            hashLinks.forEach(function (link) {
-                link.classList.remove('active');
+            function updateActiveNav() {
+                var scrollY = window.pageYOffset ||
+                    document.documentElement.scrollTop;
+
+                var headerOffset = 120;
+                var currentActive = null;
+
+                sections.forEach(function (item) {
+                    var top = item.el.offsetTop - headerOffset;
+                    var bottom = top + item.el.offsetHeight;
+
+                    if (scrollY >= top && scrollY < bottom) {
+                        currentActive = item.link;
+                    }
+                });
+
+                hashLinks.forEach(function (link) {
+                    link.classList.remove('active');
+                });
+
+                if (currentActive) {
+                    currentActive.classList.add('active');
+                }
+            }
+
+            window.addEventListener('scroll', updateActiveNav, {
+                passive: true
             });
 
-            if (currentActive) {
-                currentActive.classList.add('active');
-            }
-        }
+            updateActiveNav();
+        });
 
-        window.addEventListener('scroll', updateActiveNav, { passive: true });
-        updateActiveNav(); // Initial trigger on load
-    });
     </script>
 
-    {{-- Google Maps --}}
+    {{-- Leaflet Maps --}}
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     @stack('scripts')

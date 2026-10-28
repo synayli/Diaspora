@@ -537,6 +537,7 @@
 /* =========================================================
    2. VIDEO (LIGHT CLEAN WHITE)
 ========================================================= */
+
 .media-video-section {
     background: #ffffff;
     border-bottom: 1px solid var(--ds-light-border);
@@ -545,7 +546,7 @@
 .media-video-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(20px, 3vw, 32px);
+    gap: clamp(16px, 3vw, 32px);
     max-width: 1100px;
     margin: 0 auto;
 }
@@ -564,12 +565,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
     padding: 12px 18px;
     background: #f8faf6;
     border-bottom: 1px solid #e5ede2;
 }
 
 .media-video-topbar-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: 12px;
     color: #68796c;
     font-family: monospace;
@@ -579,15 +585,79 @@
 .media-video-wrap video {
     display: block;
     width: 100%;
+    height: auto;
     aspect-ratio: 16 / 9;
-    object-fit: cover;
+    max-height: 70vh;
+    object-fit: contain;      /* shows the whole video, never crops it */
     background: #09130d;
 }
 
-@media (max-width: 768px) {
+/* ---------- Responsive ---------- */
+
+/* Ultrawide */
+@media (min-width: 1600px) {
+    .media-video-grid {
+        max-width: 1280px;
+        gap: 40px;
+    }
+    .media-video-topbar-title {
+        font-size: 13px;
+    }
+}
+
+/* Small laptops and tablets landscape: keep side by side, tighter */
+@media (max-width: 1100px) {
+    .media-video-grid {
+        gap: 20px;
+    }
+    .media-video-wrap {
+        border-radius: 16px;
+    }
+}
+
+/* Tablets portrait and below: stack, centred */
+@media (max-width: 900px) {
     .media-video-grid {
         grid-template-columns: 1fr;
-        max-width: 560px;
+        max-width: 640px;
+    }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+    .media-video-grid {
+        max-width: 100%;
+        gap: 18px;
+    }
+    .media-video-topbar {
+        padding: 10px 14px;
+    }
+    .media-video-topbar-title {
+        font-size: 11.5px;
+    }
+    .media-video-wrap {
+        border-radius: 14px;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    }
+}
+
+/* Small phones */
+@media (max-width: 400px) {
+    .media-video-topbar {
+        padding: 8px 12px;
+    }
+    .media-video-topbar-title {
+        font-size: 11px;
+    }
+    .media-video-wrap {
+        border-radius: 12px;
+    }
+}
+
+/* Landscape phones: keep the video from taking more than the screen height */
+@media (max-height: 500px) and (orientation: landscape) {
+    .media-video-wrap video {
+        max-height: 85vh;
     }
 }
 
@@ -946,6 +1016,67 @@
     font-weight: 700;
 }
 
+/* link button */
+.media-insights-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin-top: 36px;
+}
+
+.media-insights-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+    color: #263b2b;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.media-insights-text-link svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: #6b8852;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.2s ease;
+}
+
+.media-insights-text-link:hover {
+    color: #6b8852;
+}
+
+.media-insights-text-link:hover svg {
+    transform: translate(2px, -2px);
+}
+
+.media-insights-link-divider {
+    width: 1px;
+    height: 18px;
+    background: #dce5d5;
+}
+
+@media (max-width: 480px) {
+    .media-insights-action {
+        gap: 14px;
+    }
+
+    .media-insights-link-divider {
+        height: 14px;
+    }
+
+    .media-insights-text-link {
+        font-size: 13px;
+    }
+}
+
 /* =========================================================
    6. CTA (DEEP FOREST DARK)
 ========================================================= */
@@ -1180,6 +1311,34 @@
     border-color: var(--ds-accent-lime);
 }
 
+.media-lightbox-video {
+    display: none;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    background: #000;
+}
+
+.media-lightbox-stage.is-video .media-lightbox-video { display: block; }
+.media-lightbox-stage.is-video .media-lightbox-image { display: none; }
+
+/* Video thumbnail with a play icon */
+.media-lightbox-thumb.is-video {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #102017;
+    color: var(--ds-accent-lime);
+}
+
+.media-lightbox-thumb.is-video svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
 /* =========================================================
    RESPONSIVE BREAKPOINTS
 ========================================================= */
@@ -1228,14 +1387,15 @@
 @php
     $activities = [
         [
-            'tag'    => 'Engagement',
+            'tag'    => 'Vacation',
             'title'  => 'Company Trip',
             'alt'    => 'Diaspora company trip',
             'desc'   => "Highlights and memorable moments from Diaspora's team annual retreat and company trip.",
             'photos' => [
+                asset('video/vacation.mp4'),
                 asset('images/DSB-trip/trip-1.png'),
                 asset('images/DSB-trip/trip-2.png'),
-                asset('images/DSB-trip/trip-3.png'),
+                asset('images/DSB-trip/trip-3.jpeg'),
                 asset('images/DSB-trip/trip-4.jpeg'),
                 asset('images/DSB-trip/trip-5.jpeg'),
                 asset('images/DSB-trip/trip-6.jpeg'),
@@ -1245,6 +1405,7 @@
                 asset('images/DSB-trip/trip-10.jpeg'),
                 asset('images/DSB-trip/trip-11.jpeg'),
                 asset('images/DSB-trip/trip-12.JPG'),
+                asset('images/DSB-trip/trip-13.jpeg'),
             ],
         ],
         [
@@ -1472,6 +1633,16 @@
 
         <div class="media-activity-grid">
             @foreach ($activities as $activity)
+                @php
+                    $isVideo = fn ($p) => preg_match('/\.(mp4|webm|mov)(\?.*)?$/i', $p);
+
+                    $videoCount = collect($activity['photos'])->filter($isVideo)->count();
+                    $photoCount = count($activity['photos']) - $videoCount;
+
+                    // Cover = the first item that is not a video
+                    $cover = collect($activity['photos'])->first(fn ($p) => !$isVideo($p));
+                @endphp
+
                 <div
                     class="media-activity-card"
                     role="button"
@@ -1488,9 +1659,9 @@
                                 <circle cx="8.5" cy="8.5" r="1.5"/>
                                 <polyline points="21 15 16 10 5 21"/>
                             </svg>
-                            {{ count($activity['photos']) }} Photos
+                            {{ $photoCount }} Photos{{ $videoCount ? ' · ' . $videoCount . ($videoCount === 1 ? ' Video' : ' Videos') : '' }}
                         </span>
-                        <img src="{{ $activity['photos'][0] }}" alt="{{ $activity['alt'] }}" loading="lazy">
+                        <img src="{{ $cover }}" alt="{{ $activity['alt'] }}" loading="lazy">
                     </div>
 
                     <div class="media-activity-content">
@@ -1554,6 +1725,7 @@
     </div>
 </section>
 
+
 {{-- 5. LATEST INSIGHTS (PURE WHITE MODERN LIGHT) --}}
 <section class="media-section media-insights-section section-theme-light" id="insights">
     <div class="container">
@@ -1561,62 +1733,144 @@
             <span class="media-eyebrow">Industry Feed</span>
             <h2>Latest Cybersecurity Insights</h2>
             <div class="media-heading-line"></div>
-            <p>Stay informed with news, emerging threat patterns, and cybersecurity updates.</p>
+            <p>
+                Stay informed with global cybersecurity news, emerging threats,
+                and official Malaysian cybersecurity advisories.
+            </p>
         </div>
 
         <div class="media-insight-grid">
-            @forelse (($insights ?? []) as $article)
-                @if (is_array($article) && !empty($article['url']))
-                    <a
-                        href="{{ $article['url'] }}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="media-insight-card"
-                    >
-                        <span class="media-tag-light">{{ $article['category'] ?? 'Cybersecurity' }}</span>
-                        <h3>{{ $article['title'] ?? 'Cybersecurity Update' }}</h3>
-                        <p>{{ $article['description'] ?? 'Read the latest cybersecurity news and developments.' }}</p>
+            @php
+                $validInsights = collect($insights ?? [])
+                    ->filter(function ($article) {
+                        return is_array($article)
+                            && !empty($article['url'])
+                            && !empty($article['title']);
+                    })
+                    ->take(6);
+            @endphp
 
-                        <div class="media-insight-source">
-                            <span>Source: <strong>{{ $article['source'] ?? 'The Hacker News' }}</strong></span>
-                            <span class="media-insight-arrow" aria-hidden="true">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                                    <polyline points="7 7 17 7 17 17"></polyline>
-                                </svg>
-                            </span>
-                        </div>
-                    </a>
-                @endif
+            @forelse ($validInsights as $article)
+                <a
+                    href="{{ $article['url'] }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="media-insight-card"
+                    aria-label="Read article: {{ $article['title'] }}"
+                >
+                    <span class="media-tag-light">
+                        {{ $article['category'] ?? 'Cybersecurity' }}
+                    </span>
+
+                    <h3>{{ $article['title'] }}</h3>
+
+                    <p>
+                        {{ $article['description'] ?? 'Read the latest cybersecurity news and developments.' }}
+                    </p>
+
+                    <div class="media-insight-source">
+                        <span>
+                            Source:
+                            <strong>
+                                {{ $article['source'] ?? 'The Hacker News' }}
+                            </strong>
+                        </span>
+
+                        <span class="media-insight-arrow" aria-hidden="true">
+                            <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.4"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </span>
+                    </div>
+                </a>
             @empty
                 <div class="media-insights-empty">
                     <span class="media-insights-empty-icon" aria-hidden="true">i</span>
                     <h3>Insights Feed Updating</h3>
-                    <p>Recent news is temporarily unavailable. Visit The Hacker News directly for live updates.</p>
-                    <a href="https://thehackernews.com/" target="_blank" rel="noopener noreferrer" class="media-btn media-btn-dark" style="margin-top: 14px;">
-                        <span>Explore Feed</span>
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <p>
+                        Recent cybersecurity updates are temporarily unavailable.
+                        Visit our news sources directly for the latest information.
+                    </p>
+
+                    <a
+                        href="https://thehackernews.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="media-btn media-btn-dark"
+                        style="margin-top: 14px;"
+                    >
+                        <span>Explore The Hacker News</span>
+                        <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                             <polyline points="12 5 19 12 12 19"></polyline>
                         </svg>
+                    </a>
+
+                    <a
+                        href="https://www.nc4.gov.my/alertAdvisory"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="media-btn media-btn-dark"
+                        style="margin-top: 10px;"
+                    >
+                        <span>Explore NC4 Advisories</span>
                     </a>
                 </div>
             @endforelse
         </div>
 
-        @if(!empty($insights))
+        @if ($validInsights->isNotEmpty())
             <div class="media-insights-action">
-                <a href="https://thehackernews.com/" target="_blank" rel="noopener noreferrer" class="media-btn media-btn-dark">
-                    <span>View More News</span>
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <line x1="7" y1="17" x2="17" y2="7"></line>
-                        <polyline points="7 7 17 7 17 17"></polyline>
+                <a
+                    href="https://thehackernews.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="media-insights-text-link"
+                >
+                    <span>The Hacker News</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
+                </a>
+
+                <span class="media-insights-link-divider" aria-hidden="true"></span>
+
+                <a
+                    href="https://www.nc4.gov.my/alertAdvisory"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="media-insights-text-link"
+                >
+                    <span>NC4 Alert &amp; Advisory</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 17 17 7M7 7h10v10" />
                     </svg>
                 </a>
             </div>
         @endif
     </div>
 </section>
+
 
 {{-- 6. CTA (DEEP FOREST DARK) --}}
 <section class="media-cta-section section-theme-dark">
@@ -1660,6 +1914,7 @@
             </button>
 
             <img class="media-lightbox-image" id="mediaLightboxImage" src="" alt="">
+            <video class="media-lightbox-video" id="mediaLightboxVideo" controls playsinline preload="metadata"></video>
 
             <button type="button" class="media-lightbox-nav media-lightbox-next" data-lightbox-next aria-label="Next photo">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1676,121 +1931,159 @@
 
 @verbatim
 <script>
-(function () {
-    var box = document.getElementById('mediaLightbox');
-    if (!box) return;
+    (function () {
+        var box = document.getElementById('mediaLightbox');
+        if (!box) return;
 
-    var imgEl     = document.getElementById('mediaLightboxImage');
-    var titleEl   = document.getElementById('mediaLightboxTitle');
-    var counterEl = document.getElementById('mediaLightboxCounter');
-    var thumbsEl  = document.getElementById('mediaLightboxThumbs');
-    var stageEl   = document.getElementById('mediaLightboxStage');
+        var imgEl     = document.getElementById('mediaLightboxImage');
+        var videoEl   = document.getElementById('mediaLightboxVideo');
+        var titleEl   = document.getElementById('mediaLightboxTitle');
+        var counterEl = document.getElementById('mediaLightboxCounter');
+        var thumbsEl  = document.getElementById('mediaLightboxThumbs');
+        var stageEl   = document.getElementById('mediaLightboxStage');
 
-    var photos = [], index = 0, lastFocus = null, touchStartX = null;
+        var photos = [], index = 0, lastFocus = null, touchStartX = null;
 
-    function show(i) {
-        if (!photos.length) return;
-        index = (i + photos.length) % photos.length;
-
-        imgEl.classList.add('is-loading');
-        imgEl.onload = function () { imgEl.classList.remove('is-loading'); };
-        imgEl.src = photos[index];
-        imgEl.alt = titleEl.textContent + ' photo ' + (index + 1);
-        counterEl.textContent = (index + 1) + ' / ' + photos.length;
-
-        var thumbs = thumbsEl.children;
-        for (var t = 0; t < thumbs.length; t++) {
-            thumbs[t].classList.toggle('is-active', t === index);
-        }
-        if (thumbs[index] && thumbs[index].scrollIntoView) {
-            thumbs[index].scrollIntoView({ block: 'nearest', inline: 'center' });
+        function isVideo(src) {
+            return /\.(mp4|webm|mov)(\?.*)?$/i.test(src);
         }
 
-        [index + 1, index - 1].forEach(function (n) {
-            var p = new Image();
-            p.src = photos[(n + photos.length) % photos.length];
+        function stopVideo() {
+            videoEl.pause();
+            videoEl.removeAttribute('src');
+            videoEl.load();
+        }
+
+        function show(i) {
+            if (!photos.length) return;
+            index = (i + photos.length) % photos.length;
+            var src = photos[index];
+            var vid = isVideo(src);
+
+            stageEl.classList.toggle('is-video', vid);
+
+            if (vid) {
+                imgEl.removeAttribute('src');
+                videoEl.src = src;
+                videoEl.load();
+            } else {
+                stopVideo();
+                imgEl.classList.add('is-loading');
+                imgEl.onload = function () { imgEl.classList.remove('is-loading'); };
+                imgEl.src = src;
+                imgEl.alt = titleEl.textContent + ' photo ' + (index + 1);
+            }
+
+            counterEl.textContent = (index + 1) + ' / ' + photos.length;
+
+            var thumbs = thumbsEl.children;
+            for (var t = 0; t < thumbs.length; t++) {
+                thumbs[t].classList.toggle('is-active', t === index);
+            }
+            if (thumbs[index] && thumbs[index].scrollIntoView) {
+                thumbs[index].scrollIntoView({ block: 'nearest', inline: 'center' });
+            }
+
+            [index + 1, index - 1].forEach(function (n) {
+                var s = photos[(n + photos.length) % photos.length];
+                if (!isVideo(s)) { var p = new Image(); p.src = s; }
+            });
+        }
+
+        function open(list, name, trigger) {
+            if (!list || !list.length) return;
+            photos = list;
+            lastFocus = trigger || document.activeElement;
+            titleEl.textContent = name || 'Gallery';
+
+            thumbsEl.innerHTML = '';
+            photos.forEach(function (src, i) {
+                var b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'media-lightbox-thumb';
+                b.setAttribute('aria-label', (isVideo(src) ? 'Show video ' : 'Show photo ') + (i + 1));
+
+                if (isVideo(src)) {
+                    b.classList.add('is-video');
+                    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="7 4 20 12 7 20 7 4"></polygon></svg>';
+                } else {
+                    var im = document.createElement('img');
+                    im.src = src; im.alt = ''; im.loading = 'lazy';
+                    b.appendChild(im);
+                }
+
+                b.addEventListener('click', function () { show(i); });
+                thumbsEl.appendChild(b);
+            });
+            thumbsEl.style.display = photos.length > 1 ? '' : 'none';
+
+            var multi = photos.length > 1;
+            box.querySelector('[data-lightbox-prev]').style.display = multi ? '' : 'none';
+            box.querySelector('[data-lightbox-next]').style.display = multi ? '' : 'none';
+
+            box.classList.add('is-open');
+            box.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('media-lightbox-open');
+            show(0);
+            box.querySelector('[data-lightbox-close]').focus();
+        }
+
+        function close() {
+            stopVideo();
+            stageEl.classList.remove('is-video');
+            box.classList.remove('is-open');
+            box.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('media-lightbox-open');
+            imgEl.removeAttribute('src');
+            if (lastFocus && lastFocus.focus) lastFocus.focus();
+        }
+
+        document.querySelectorAll('[data-gallery]').forEach(function (card) {
+            function launch() {
+                var list = [];
+                try { list = JSON.parse(card.getAttribute('data-gallery')); } catch (e) {}
+                open(list, card.getAttribute('data-title'), card);
+            }
+            card.addEventListener('click', launch);
+            card.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); launch(); }
+            });
         });
-    }
 
-    function open(list, name, trigger) {
-        if (!list || !list.length) return;
-        photos = list;
-        lastFocus = trigger || document.activeElement;
-        titleEl.textContent = name || 'Gallery';
+        box.querySelector('[data-lightbox-close]').addEventListener('click', close);
+        box.querySelector('[data-lightbox-prev]').addEventListener('click', function () { show(index - 1); });
+        box.querySelector('[data-lightbox-next]').addEventListener('click', function () { show(index + 1); });
+        box.addEventListener('click', function (e) { if (e.target === box) close(); });
 
-        thumbsEl.innerHTML = '';
-        photos.forEach(function (src, i) {
-            var b = document.createElement('button');
-            var im = document.createElement('img');
-            b.type = 'button';
-            b.className = 'media-lightbox-thumb';
-            b.setAttribute('aria-label', 'Show photo ' + (i + 1));
-            im.src = src; im.alt = ''; im.loading = 'lazy';
-            b.appendChild(im);
-            b.addEventListener('click', function () { show(i); });
-            thumbsEl.appendChild(b);
+        document.addEventListener('keydown', function (e) {
+            if (!box.classList.contains('is-open')) return;
+            if (e.key === 'Escape') close();
+            else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                /* when the video has focus, arrows seek instead of changing slide */
+                if (document.activeElement === videoEl) return;
+                show(e.key === 'ArrowRight' ? index + 1 : index - 1);
+            }
+            else if (e.key === 'Tab') {
+                var f = box.querySelectorAll('button:not([style*="display: none"])');
+                if (!f.length) return;
+                var first = f[0], last = f[f.length - 1];
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
         });
-        thumbsEl.style.display = photos.length > 1 ? '' : 'none';
 
-        var multi = photos.length > 1;
-        box.querySelector('[data-lightbox-prev]').style.display = multi ? '' : 'none';
-        box.querySelector('[data-lightbox-next]').style.display = multi ? '' : 'none';
-
-        box.classList.add('is-open');
-        box.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('media-lightbox-open');
-        show(0);
-        box.querySelector('[data-lightbox-close]').focus();
-    }
-
-    function close() {
-        box.classList.remove('is-open');
-        box.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('media-lightbox-open');
-        imgEl.removeAttribute('src');
-        if (lastFocus && lastFocus.focus) lastFocus.focus();
-    }
-
-    document.querySelectorAll('[data-gallery]').forEach(function (card) {
-        function launch() {
-            var list = [];
-            try { list = JSON.parse(card.getAttribute('data-gallery')); } catch (e) {}
-            open(list, card.getAttribute('data-title'), card);
-        }
-        card.addEventListener('click', launch);
-        card.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); launch(); }
-        });
-    });
-
-    box.querySelector('[data-lightbox-close]').addEventListener('click', close);
-    box.querySelector('[data-lightbox-prev]').addEventListener('click', function () { show(index - 1); });
-    box.querySelector('[data-lightbox-next]').addEventListener('click', function () { show(index + 1); });
-    box.addEventListener('click', function (e) { if (e.target === box) close(); });
-
-    document.addEventListener('keydown', function (e) {
-        if (!box.classList.contains('is-open')) return;
-        if (e.key === 'Escape') close();
-        else if (e.key === 'ArrowRight') show(index + 1);
-        else if (e.key === 'ArrowLeft') show(index - 1);
-        else if (e.key === 'Tab') {
-            var f = box.querySelectorAll('button:not([style*="display: none"])');
-            if (!f.length) return;
-            var first = f[0], last = f[f.length - 1];
-            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-        }
-    });
-
-    stageEl.addEventListener('touchstart', function (e) { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
-    stageEl.addEventListener('touchend', function (e) {
-        if (touchStartX === null) return;
-        var dx = e.changedTouches[0].clientX - touchStartX;
-        touchStartX = null;
-        if (Math.abs(dx) > 45) show(dx < 0 ? index + 1 : index - 1);
-    }, { passive: true });
-})();
-</script>
+        stageEl.addEventListener('touchstart', function (e) {
+            /* don't treat scrubbing the video bar as a swipe */
+            touchStartX = (e.target === videoEl) ? null : e.changedTouches[0].clientX;
+        }, { passive: true });
+        stageEl.addEventListener('touchend', function (e) {
+            if (touchStartX === null) return;
+            var dx = e.changedTouches[0].clientX - touchStartX;
+            touchStartX = null;
+            if (Math.abs(dx) > 45) show(dx < 0 ? index + 1 : index - 1);
+        }, { passive: true });
+    })();
+    </script>
 @endverbatim
 
 @endsection
