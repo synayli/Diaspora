@@ -4677,6 +4677,27 @@ h1, h2, h3 {
     overflow: hidden !important;
 }
 
+/* Google reCAPTCHA */
+
+.ds-enquiry-captcha {
+    margin: 20px 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.ds-enquiry-captcha .g-recaptcha {
+    max-width: 100%;
+}
+
+.ds-enquiry-captcha .ds-field-error {
+    display: block;
+    margin-top: 8px;
+    color: #dc3545;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
 /* ================================
    DARK OFFICE LOCATION MAP
 ================================ */

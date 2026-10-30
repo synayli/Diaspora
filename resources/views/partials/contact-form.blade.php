@@ -50,35 +50,43 @@
 
             <div class="ds-enquiry-field">
                 <label for="dsService">I'm interested in <span>*</span></label>
+
                 <select id="dsService" name="subject" required>
                     <option value="" disabled {{ old('subject') ? '' : 'selected' }}>
                         Select a service
                     </option>
+
                     <option value="Cyber Security Assessment and Testing"
                         {{ old('subject') == 'Cyber Security Assessment and Testing' ? 'selected' : '' }}>
                         Cyber Security Assessment and Testing
                     </option>
+
                     <option value="Information Security Governance and Compliance"
                         {{ old('subject') == 'Information Security Governance and Compliance' ? 'selected' : '' }}>
                         Information Security Governance and Compliance
                     </option>
+
                     <option value="NCII readiness and compliance"
                         {{ old('subject') == 'NCII readiness and compliance' ? 'selected' : '' }}>
                         NCII readiness and compliance
                     </option>
+
                     <option value="Disaster Recovery and Simulation"
                         {{ old('subject') == 'Disaster Recovery and Simulation' ? 'selected' : '' }}>
                         Disaster Recovery and Simulation
                     </option>
+
                     <option value="Training and awareness"
                         {{ old('subject') == 'Training and awareness' ? 'selected' : '' }}>
                         Training and awareness
                     </option>
+
                     <option value="Help choosing a service"
                         {{ old('subject') == 'Help choosing a service' ? 'selected' : '' }}>
                         Help choosing a service
                     </option>
                 </select>
+
                 @error('subject')
                     <small class="ds-field-error">{{ $message }}</small>
                 @enderror
@@ -98,6 +106,20 @@
         <p class="ds-enquiry-privacy">
             Please do not include passwords, confidential information or sensitive system details.
         </p>
+
+        {{-- GOOGLE reCAPTCHA v2 --}}
+        <div class="ds-enquiry-captcha">
+
+            <div class="g-recaptcha"
+                data-sitekey="{{ config('services.recaptcha.site_key') }}"
+                data-theme="dark">
+            </div>
+
+            @error('g-recaptcha-response')
+                <small class="ds-field-error">{{ $message }}</small>
+            @enderror
+
+        </div>
 
         <button type="submit" class="ds-enquiry-submit">
             Send your enquiry
@@ -122,22 +144,30 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const flash = document.getElementById('thanksFlash');
+        document.addEventListener('DOMContentLoaded', function () {
+            const flash = document.getElementById('thanksFlash');
 
-        if (!flash) return;
+            if (!flash) return;
 
-        // Position the popup relative to the whole page viewport
-        document.body.appendChild(flash);
+            // Position the popup relative to the whole page viewport
+            document.body.appendChild(flash);
 
-        // Fade out after 2.5 seconds
-        setTimeout(function () {
-            flash.classList.add('is-hiding');
-
+            // Fade out after 2.5 seconds
             setTimeout(function () {
-                flash.remove();
-            }, 400);
-        }, 2500);
-    });
+                flash.classList.add('is-hiding');
+
+                setTimeout(function () {
+                    flash.remove();
+                }, 400);
+            }, 2500);
+        });
     </script>
 @endif
+
+@push('scripts')
+    <script
+        src="https://www.google.com/recaptcha/api.js"
+        async
+        defer>
+    </script>
+@endpush
