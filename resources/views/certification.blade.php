@@ -1203,7 +1203,7 @@ svg.icon-vector,
                             <p>Accredited under CyberSecurity Malaysia's PTSP Scheme, confirming our penetration testing services meet national standards of technical assurance.</p>
                         </div>
                     </div>
-                    <a href="{{ asset('images/Cert-PTSP.png') }}" target="_blank" rel="noopener noreferrer" class="cert-action-btn">
+                    <a href="{{ asset('documents/Cert-PTSP.pdf') }}" target="_blank" rel="noopener noreferrer" class="cert-action-btn">
                         <span>View Certificate</span>
                         <svg 
                             class="icon-vector" 

@@ -457,7 +457,6 @@
 
         </div>
 
-
         {{-- Right: About Diaspora and its approach --}}
         <div class="ds-about-content reveal">
 
@@ -545,7 +544,7 @@
          'alt' => 'NACSA', 'title' => 'NACSA Licensed Cybersecurity Service Provider'],
         ['file' => 'images/Cert-ISMS-ISO-27001-2022.png', 'img' => 'images/ISO.png', 'class' => '',
          'alt' => 'ISO/IEC 27001 certification', 'title' => 'ISO/IEC 27001 Certified ISMS'],
-        ['file' => 'images/Cert-PTSP.png', 'img' => 'images/ISCB-removebg.png', 'class' => '',
+        ['file' => 'documents/Cert-PTSP.pdf', 'img' => 'images/ISCB-removebg.png', 'class' => '',
          'alt' => 'ISCB Penetration Test Service Provider (PTSP)', 'title' => 'ISCB PTSP Registered'],
     ];
 @endphp

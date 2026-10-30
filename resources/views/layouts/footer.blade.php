@@ -66,7 +66,7 @@
                         <img class="logo-fit" src="{{ asset('images/logo-cert_csm27001.png') }}" alt="ISO/IEC 27001 certification" loading="lazy">
                     </a>
 
-                    <a href="{{ asset('images/Cert-PTSP.png') }}" target="_blank" rel="noopener noreferrer"
+                    <a href="{{ asset('documents/Cert-PTSP.pdf') }}" target="_blank" rel="noopener noreferrer"
                     class="footer-cert" title="ISCB PTSP Registered">
                         <img class="logo-iscb" src="{{ asset('images/ISCB_footer.png') }}" alt="ISCB Penetration Test Service Provider (PTSP)" loading="lazy">
                     </a>
